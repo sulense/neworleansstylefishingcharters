@@ -1,0 +1,315 @@
+@import "tailwindcss";
+
+@theme inline {
+  --font-sans: var(--font-open-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-libre-baskerville), Georgia, serif;
+  --font-serif: var(--font-libre-baskerville), Georgia, serif;
+
+  --color-bayou: #203F39;
+  --color-bayou-deep: #152B27;
+  --color-bayou-mid: #2B514A;
+  --color-cream: #F6F1E7;
+  --color-cream-light: #FBF8F3;
+  --color-sage: #849481;
+  --color-sage-soft: #E9EFE7;
+  --color-charcoal: #26302E;
+  --color-copper: #BF754C;
+  --color-copper-dark: #A55E38;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@layer base {
+  body {
+    font-weight: 500;
+  }
+
+  p,
+  li,
+  input,
+  select,
+  textarea {
+    font-weight: 500;
+  }
+
+  strong,
+  b {
+    font-weight: 700;
+  }
+}
+
+/* Deep Bayou Green (#203F39) with layered bathymetric waterway contours & warm copper/sage glow */
+.bg-bayou-green {
+  background-color: #203F39;
+  background-image:
+    radial-gradient(ellipse 68% 48% at 14% 20%, rgba(132, 148, 129, 0.18), transparent 62%),
+    radial-gradient(ellipse 56% 46% at 86% 78%, rgba(191, 117, 76, 0.14), transparent 60%),
+    linear-gradient(180deg, #203F39 0%, #1B3631 55%, #162C28 100%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='720' height='480' viewBox='0 0 720 480'%3E%3Cg fill='none' stroke='%23E9E2D3' stroke-opacity='0.085' stroke-width='1.2'%3E%3Cpath d='M-40 60 C 90 10, 210 130, 360 75 C 510 20, 610 120, 760 65'/%3E%3Cpath d='M-40 120 C 95 70, 215 185, 365 130 C 515 75, 615 175, 760 120'/%3E%3Cpath d='M-40 185 C 85 140, 205 245, 355 190 C 505 140, 605 235, 760 185' stroke-opacity='0.055' stroke-dasharray='5 8'/%3E%3Cpath d='M-40 245 C 80 195, 200 310, 355 255 C 505 200, 605 295, 760 245'/%3E%3Cpath d='M-40 315 C 90 265, 210 375, 365 325 C 515 270, 615 365, 760 315'/%3E%3Cpath d='M-40 415 C 110 370, 235 465, 390 420 C 540 375, 635 450, 760 410'/%3E%3C/g%3E%3C/svg%3E");
+  background-size: auto, auto, auto, 720px 480px;
+}
+
+/* Warm Oyster Cream (#F6F1E7) with whisper-soft blended Lafitte estuary chart & bayou contour lines */
+.bg-oyster-cream {
+  background-color: #F6F1E7;
+  background-image:
+    radial-gradient(ellipse 70% 50% at 88% 12%, rgba(132, 148, 129, 0.12), transparent 60%),
+    linear-gradient(180deg, rgba(246, 241, 231, 0.94) 0%, rgba(242, 236, 223, 0.92) 100%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='720' height='480' viewBox='0 0 720 480'%3E%3Cg fill='none' stroke='%23203F39' stroke-opacity='0.06' stroke-width='1.15'%3E%3Cpath d='M-40 75 C 95 25, 220 140, 365 85 C 510 30, 615 125, 760 75'/%3E%3Cpath d='M-40 165 C 90 120, 215 225, 365 170 C 515 120, 610 215, 760 165' stroke-dasharray='5 9'/%3E%3Cpath d='M-40 240 C 85 190, 210 305, 360 250 C 510 195, 610 290, 760 240'/%3E%3Cpath d='M-40 390 C 105 345, 235 445, 385 395 C 535 350, 630 430, 760 390'/%3E%3C/g%3E%3C/svg%3E"),
+    url("/images/art/estuary-chart-bg.jpg");
+  background-size: auto, auto, 720px 480px, cover;
+  background-position: center, center, center, center;
+}
+
+/* Soft Marsh Sage Wash (#E8EEE6) with subtle Louisiana bayou topographic lines */
+.bg-marsh-sage {
+  background-color: #E8EEE6;
+  background-image:
+    radial-gradient(ellipse 65% 50% at 12% 18%, rgba(132, 148, 129, 0.2), transparent 64%),
+    radial-gradient(ellipse 55% 45% at 88% 82%, rgba(191, 117, 76, 0.08), transparent 60%),
+    linear-gradient(180deg, #E8EEE6 0%, #E1E8DF 100%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='720' height='480' viewBox='0 0 720 480'%3E%3Cg fill='none' stroke='%23203F39' stroke-opacity='0.065' stroke-width='1.15'%3E%3Cpath d='M-40 80 C 90 30, 215 145, 365 90 C 515 35, 615 130, 760 80'/%3E%3Cpath d='M-40 255 C 85 205, 210 320, 360 265 C 510 210, 610 305, 760 255'/%3E%3Cpath d='M-40 400 C 105 355, 235 455, 385 405 C 535 360, 630 440, 760 400'/%3E%3C/g%3E%3C/svg%3E");
+  background-size: auto, auto, auto, 720px 480px;
+}
+
+/* Refined Burnished Copper / Rust Primary CTA (#BF754C) */
+.btn-copper {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(180deg, #C97E54 0%, #BF754C 55%, #A9613B 100%);
+  box-shadow:
+    0 10px 24px -8px rgba(32, 63, 57, 0.35),
+    inset 0 1px 0 rgba(255, 245, 235, 0.32),
+    inset 0 -2px 0 rgba(112, 56, 28, 0.25);
+  transition:
+    transform 220ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 220ms cubic-bezier(0.22, 1, 0.36, 1),
+    filter 220ms ease;
+}
+
+.btn-copper::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    115deg,
+    transparent 20%,
+    rgba(255, 250, 240, 0.24) 48%,
+    transparent 75%
+  );
+  transform: translateX(-125%);
+  transition: transform 650ms cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: none;
+}
+
+.btn-copper:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 16px 32px -8px rgba(32, 63, 57, 0.45),
+    inset 0 1px 0 rgba(255, 245, 235, 0.4);
+  filter: brightness(1.04);
+}
+
+.btn-copper:hover::after {
+  transform: translateX(125%);
+}
+
+.btn-copper:active {
+  transform: translateY(0px) scale(0.99);
+}
+
+/* Smooth cinematic Ken Burns pan/zoom for desktop hero montage slides */
+@keyframes kenBurnsSlow {
+  0% {
+    transform: scale(1.02) translate3d(0, 0, 0);
+  }
+  100% {
+    transform: scale(1.1) translate3d(-1.5%, -1%, 0);
+  }
+}
+
+.animate-ken-burns {
+  animation: kenBurnsSlow 7.5s ease-out forwards;
+  will-change: transform;
+}
+
+/* Continuous seamless right-to-left fishing rope & hooked catch reel */
+@keyframes ropeReelLoop {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-1600px, 0, 0);
+  }
+}
+
+.animate-rope-reel {
+  animation: ropeReelLoop 22s linear infinite;
+  will-change: transform;
+}
+
+/* Lifelike gentle swim/wiggle pivoted right at the fish's hooked mouth */
+@keyframes hookedFishWiggle {
+  0%, 100% {
+    transform: rotate(-3.2deg) translateY(0px);
+  }
+  35% {
+    transform: rotate(2.8deg) translateY(-1.5px);
+  }
+  70% {
+    transform: rotate(-1.6deg) translateY(1px);
+  }
+}
+
+.animate-fish-wiggle {
+  animation: hookedFishWiggle 2.4s ease-in-out infinite;
+  will-change: transform;
+}
+
+.animate-fish-wiggle-alt {
+  animation: hookedFishWiggle 2.8s ease-in-out 0.9s infinite;
+  will-change: transform;
+}
+
+/* Natural document-space bottom-to-top floating fish & hooks (true footer -> header flow) */
+@keyframes bayouFloatUp {
+  0% {
+    transform: translate3d(0, 1%, 0);
+    opacity: 0;
+  }
+  3% {
+    opacity: 1;
+  }
+  96% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate3d(0, -100%, 0);
+    opacity: 0;
+  }
+}
+
+@keyframes bayouDriftSway {
+  0%, 100% {
+    transform: translate3d(-14px, 0, 0) rotate(-7deg);
+  }
+  50% {
+    transform: translate3d(14px, 0, 0) rotate(7deg);
+  }
+}
+
+.animate-bayou-float-up {
+  animation-name: bayouFloatUp;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  will-change: transform, opacity;
+}
+
+.animate-bayou-drift {
+  animation-name: bayouDriftSway;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  will-change: transform;
+}
+
+/* Gentle coastal breeze animations for marsh cattails, swinging hooks/anchors & stamps */
+@keyframes marshSway {
+  0%, 100% {
+    transform: rotate(-1.8deg);
+  }
+  50% {
+    transform: rotate(2.1deg);
+  }
+}
+
+.animate-marsh-sway {
+  transform-origin: bottom center;
+  animation: marshSway 6.5s ease-in-out infinite;
+}
+
+.animate-marsh-sway-delayed {
+  transform-origin: bottom center;
+  animation: marshSway 7.4s ease-in-out 1.4s infinite;
+}
+
+@keyframes anchorSwing {
+  0%, 100% {
+    transform: rotate(-2.4deg);
+  }
+  50% {
+    transform: rotate(2.4deg);
+  }
+}
+
+.animate-anchor-swing {
+  transform-origin: top center;
+  animation: anchorSwing 5.8s ease-in-out infinite;
+}
+
+@keyframes floatStamp {
+  0%, 100% {
+    transform: translateY(0px) rotate(-10deg);
+  }
+  50% {
+    transform: translateY(-6px) rotate(-8deg);
+  }
+}
+
+.animate-float-stamp {
+  animation: floatStamp 8s ease-in-out infinite;
+}
+
+@keyframes photoFloat {
+  0%, 100% {
+    transform: translate3d(0, 2px, 0) rotate(-1.1deg);
+  }
+  50% {
+    transform: translate3d(0, -12px, 0) rotate(1.1deg);
+  }
+}
+
+.animate-photo-float {
+  animation: photoFloat 3.6s ease-in-out infinite;
+  will-change: transform;
+}
+
+@keyframes photoFloatShadow {
+  0%, 100% {
+    transform: scaleX(1) scaleY(1);
+    opacity: 0.44;
+  }
+  50% {
+    transform: scaleX(0.84) scaleY(0.8);
+    opacity: 0.2;
+  }
+}
+
+.animate-photo-float-shadow {
+  animation: photoFloatShadow 3.6s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-ken-burns,
+  .animate-rope-reel,
+  .animate-fish-wiggle,
+  .animate-fish-wiggle-alt,
+  .animate-bayou-float-up,
+  .animate-bayou-drift,
+  .animate-marsh-sway,
+  .animate-marsh-sway-delayed,
+  .animate-anchor-swing,
+  .animate-float-stamp,
+  .animate-photo-float,
+  .animate-photo-float-shadow {
+    animation: none !important;
+  }
+  .floating-bayou-layer {
+    display: none !important;
+  }
+  .btn-copper::after {
+    display: none;
+  }
+}

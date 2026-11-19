@@ -109,8 +109,13 @@ export const SITE_INFO = {
   email: "info@neworleansstylefishingcharters.com",
   address: "4811 Privateer Blvd Suite 100, Barataria, LA 70036",
   launchName: "Joe's Landing · Lafitte, LA",
-  mapsUrl: "https://maps.app.goo.gl/qZBynFGAhDfVwSy7A",
+  mapsUrl:
+    "https://www.google.com/maps/place/New+Orleans+Style+Fishing+Charters/@29.6853213,-90.1017318,979m/data=!3m2!1e3!4b1!4m6!3m5!1s0x8620b083c79a6479:0x5b0f099807e20398!8m2!3d29.6853213!4d-90.1017318!16s%2Fg%2F1tfnyywt?entry=ttu&g_ep=EgoyMDI2MTExNy4wIKXMDSoASAFQAw%3D%3D",
+  mapsEmbedUrl:
+    "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1800!2d-90.1017318!3d29.6853213!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8620b083c79a6479%3A0x5b0f099807e20398!2sNew%20Orleans%20Style%20Fishing%20Charters!5e1!3m2!1sen!2sus!4v1700000000000!5m2!1sen!2sus",
   googleReviewsUrl: "https://maps.app.goo.gl/qZBynFGAhDfVwSy7A",
+  googleWriteReviewUrl:
+    "https://search.google.com/local/writereview?placeid=ChIJeWSax4OwIIYRmAPiB5gJD1s",
   googleRating: "4.9",
   googleReviewCount: 202,
   tripAdvisorUrl:
@@ -643,44 +648,42 @@ export const TESTIMONIALS: Testimonial[] = [
   },
 ];
 
-// Exact 6 Homepage FAQs from the Content Brief — 100% fact-checked against /fishing-charter-faqs/ & current LDWF law
+// Exact 6 Homepage FAQs from the Content Brief — concise, conversational US English & fact-checked
 export const FAQS: FaqItem[] = [
   {
     id: "faq-1",
     question: "How long are your fishing charters?",
     answer:
-      "Our private inshore charters run 5 hours, typically departing just before sunrise ('safe light') from Joe's Landing. Later start times can usually be accommodated, and evening charters are sometimes available depending on scheduling.",
+      "Our private inshore charters last 5 hours and usually leave Joe's Landing right before sunrise. Later morning starts and evening trips are often available upon request.",
   },
   {
     id: "faq-2",
     question: "What should I bring on my fishing trip?",
     answer:
-      "Dress accordingly for South Louisiana weather and bring your fishing license, sunglasses, sun block, and any food, snacks, or beverages you'd like (alcohol is allowed, preferably no glass bottles). Bring a cooler to transport your filets home if you choose to keep your catch—we provide all rods, reels, bait, tackle, ice, and bottled water.",
+      "Bring your fishing license, sunglasses, sunscreen, weather-appropriate clothes, and any food or drinks you'd like (alcohol is welcome—please avoid glass bottles). We provide all gear, bait, ice, and bottled water; just bring a cooler if you'd like to take fillets home.",
   },
   {
     id: "faq-3",
     question: "Do I need a fishing license?",
     answer:
-      "Yes—a $20 Louisiana fishing license is required for anyone 18 years old or older. You can purchase it quickly in advance online or by phone through the Louisiana Department of Wildlife and Fisheries (LDWF) before your trip.",
-    highlight: "Required for ages 18+ · $20 online via LDWF",
+      "Yes. Everyone 18 and older needs a $20 Louisiana fishing license before heading out. You can easily buy one online or by phone through the LDWF ahead of your trip.",
   },
   {
     id: "faq-4",
     question: "Where will we be fishing?",
     answer:
-      "We fish the calm, shallow backwater marsh, lakes, bays, and bayous in and around the Lafitte and Barataria estuary—typically in less than 5 feet of water. We target redfish, speckled trout, black drum, sheepshead, and flounder using popping corks, market shrimp, soft plastics, spoons, and spinner baits (no live bait).",
+      "We fish the calm, shallow marshes, lakes, and bayous around Lafitte and Barataria—usually in under 5 feet of water. You'll target redfish, speckled trout, black drum, sheepshead, and flounder.",
   },
   {
     id: "faq-5",
     question: "Are beginners and children welcome?",
     answer:
-      "Absolutely. Every trip is a private charter for just your group and our USCG licensed captain, welcoming all skill levels and kids ages 4 and older. Up to 4 guests fish per boat, and for larger groups we gladly coordinate multiple boats (we run 3–4 boats a day most days).",
+      "Absolutely! Every trip is private for just your group, and we welcome all skill levels plus kids ages 4 and up. Each boat holds up to 4 guests, and we can easily set up multiple boats for larger groups.",
   },
   {
     id: "faq-6",
     question: "How far are you from downtown New Orleans?",
     answer:
-      "Joe's Landing in Barataria/Lafitte is about 20 miles south of Bourbon Street (roughly a 35–45 minute drive). Note that Uber and Lyft are out of range for return pickups from Lafitte—for easy round-trip transportation, call Tony at Gone Fishing Transportation at (504) 913-4638 and mention Captain Jason.",
-    highlight: "Round-Trip NOLA Transport: Tony at (504) 913-4638",
+      "We launch from Joe's Landing in Lafitte, about 20 miles (35–45 minutes) south of downtown New Orleans. Because Uber and Lyft don't pick up for return rides from Lafitte, call Tony at Gone Fishing Transportation for easy round-trip service and mention Captain Jason.",
   },
 ];

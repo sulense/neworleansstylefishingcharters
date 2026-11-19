@@ -2,56 +2,36 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import {
-  Ship,
-  Anchor,
-  Fish,
-  ExternalLink,
-  FileCheck2,
-  Sun,
-  Coffee,
-  Snowflake,
-  CloudSun,
-} from "lucide-react";
+import { Ship, Anchor, Fish } from "lucide-react";
 import { SITE_INFO } from "@/data/charterData";
 import {
   BayouStampWatermark,
-  CoastalWaveDivider,
   CompassRoseWatermark,
   NauticalChartOverlay,
 } from "@/components/CoastalDecorations";
+import GlidingBoatWaveDivider from "@/components/GlidingBoatWaveDivider";
 
 interface PricingSectionProps {
   onSelectTier: (tierLabel: string) => void;
 }
 
+// Section 6: What's Included strictly aligned to NOSFC - Brief
 const INCLUDED_PILLARS = [
   {
     icon: Ship,
     title: "Boat & Professional Captain",
-    detail:
-      "Private 22 ft custom bay boat (225hp Mercury Pro XS), USCG licensed captain, all gas, oil, boat ice, and bottled water.",
+    detail: "Private charter boat, experienced guide, fuel, and necessary boating equipment.",
   },
   {
     icon: Anchor,
     title: "Rods, Reels, Bait & Tackle",
-    detail:
-      "7' medium-action spinning rods, 2500 Penn reels (bait casters on request), popping corks, market shrimp, soft plastics, spoons & spinner baits.",
+    detail: "Fishing equipment and bait provided for your adventure.",
   },
   {
     icon: Fish,
     title: "Fish Cleaning & Packing",
-    detail:
-      "We clean, filet, and pack your eligible keepers in zip-lock bags so they are ready to cook, ship, or bring home.",
+    detail: "We'll clean and pack your eligible keepers so they're ready to bring home.",
   },
-];
-
-const QUICK_BRING_ITEMS = [
-  { icon: FileCheck2, label: "LA Fishing License ($20, ages 18+)", href: SITE_INFO.licenseUrl },
-  { icon: CloudSun, label: "Weather-appropriate attire" },
-  { icon: Sun, label: "Sunglasses & sun block" },
-  { icon: Coffee, label: "Snacks & drinks (no glass)" },
-  { icon: Snowflake, label: "Cooler for your filets" },
 ];
 
 // Section 5: Charter Pricing cards strictly aligned to NOSFC - Brief
@@ -239,7 +219,7 @@ export default function PricingSection({ onSelectTier }: PricingSectionProps) {
             </h2>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
             {INCLUDED_PILLARS.map((item, idx) => {
               const Icon = item.icon;
               return (
@@ -249,58 +229,26 @@ export default function PricingSection({ onSelectTier }: PricingSectionProps) {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-40px" }}
                   transition={{ duration: 0.5, delay: idx * 0.08 }}
-                  className="rounded-2xl bg-[#162D29]/80 border-2 border-[#849481]/55 hover:border-[#E5A780]/75 transition-colors p-6 sm:p-7 shadow-[0_14px_30px_-14px_rgba(6,16,14,0.5)]"
+                  className="group relative rounded-2xl bg-[#162D29]/85 border border-[#849481]/45 hover:border-[#E5A780]/75 transition-all duration-300 hover:-translate-y-1 p-7 text-center flex flex-col items-center shadow-[0_18px_36px_-16px_rgba(6,16,14,0.55)]"
                 >
-                  <div className="w-12 h-12 rounded-xl bg-[#BF754C]/20 border-2 border-[#BF754C]/60 text-[#E5A780] flex items-center justify-center mb-4">
+                  <div className="w-12 h-12 rounded-xl bg-[#BF754C]/20 border border-[#BF754C]/55 group-hover:bg-[#BF754C] text-[#E5A780] group-hover:text-white flex items-center justify-center mb-4 transition-colors duration-300">
                     <Icon className="w-6 h-6" />
                   </div>
                   <h3 className="font-display text-lg font-bold text-[#F6F1E7]">
                     {item.title}
                   </h3>
-                  <p className="mt-2 text-sm text-[#F6F1E7]/80 leading-relaxed">
+                  <p className="mt-2.5 text-sm text-[#F6F1E7]/80 leading-relaxed max-w-xs">
                     {item.detail}
                   </p>
                 </motion.div>
               );
             })}
           </div>
-
-          {/* Concise Verified "What to Bring" Reference Strip */}
-          <div className="mt-8 rounded-2xl bg-[#F6F1E7]/10 border-2 border-[#849481]/55 px-5 py-4 sm:px-6 sm:py-5">
-            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
-              <span className="text-xs font-bold uppercase tracking-[0.18em] text-[#E5A780] shrink-0">
-                What to Bring:
-              </span>
-              <div className="flex flex-wrap items-center gap-x-5 gap-y-2.5 text-xs sm:text-sm text-[#F6F1E7]/90">
-                {QUICK_BRING_ITEMS.map((b) => {
-                  const BIcon = b.icon;
-                  return b.href ? (
-                    <a
-                      key={b.label}
-                      href={b.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 font-semibold text-[#F6F1E7] hover:text-[#E5A780] underline underline-offset-4 transition-colors"
-                    >
-                      <BIcon className="w-4 h-4 text-[#E5A780] shrink-0" />
-                      {b.label}
-                      <ExternalLink className="w-3 h-3" />
-                    </a>
-                  ) : (
-                    <span key={b.label} className="inline-flex items-center gap-1.5">
-                      <BIcon className="w-4 h-4 text-[#E5A780] shrink-0" />
-                      {b.label}
-                    </span>
-                  );
-                })}
-              </div>
-            </div>
-          </div>
         </div>
       </div>
 
-      {/* Coastal Wave Seam Flowing Into Crisp White Testimonials Section */}
-      <CoastalWaveDivider
+      {/* Coastal Wave Seam with Gliding Custom Bay Boat Flowing Into Crisp White Testimonials Section */}
+      <GlidingBoatWaveDivider
         fillColor="#FFFFFF"
         midColor="#E8EEE6"
         backColor="#849481"

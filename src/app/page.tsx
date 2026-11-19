@@ -36,7 +36,7 @@ export default function HomePage() {
         <PricingSection onSelectTier={setSelectedTier} />
         <TestimonialsSection />
         <SpeciesSection />
-        <LodgingAndTransportSection onSelectTier={setSelectedTier} />
+        <LodgingAndTransportSection />
         <FaqSection />
         <BlogSection />
         <LocationSection />

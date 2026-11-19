@@ -31,7 +31,7 @@ export default function TestimonialsSection() {
       <BayouStampWatermark className="hidden lg:block absolute bottom-20 right-10 w-40 h-40 text-[#203F39] opacity-[0.045] rotate-12" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        {/* Section Editorial Heading */}
+        {/* Clean Editorial Heading */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -40,15 +40,11 @@ export default function TestimonialsSection() {
           className="text-center max-w-2xl mx-auto mb-10"
         >
           <span className="block text-xs uppercase tracking-[0.22em] font-bold text-[#BF754C]">
-            Verified Google Business Reviews
+            Testimonials
           </span>
-          <h2 className="mt-2 font-display text-3xl sm:text-4xl lg:text-[42px] font-bold text-[#203F39] tracking-tight leading-[1.15]">
+          <h2 className="mt-2.5 font-display text-3xl sm:text-4xl lg:text-[42px] font-bold text-[#203F39] tracking-tight leading-[1.15]">
             Good Times. Great Catches. Happy Anglers.
           </h2>
-          <p className="mt-3 text-sm sm:text-base text-[#495754] leading-relaxed">
-            Real Google reviews from families, first-time visitors, and avid anglers who fished the
-            Lafitte marshes with Captain Jason.
-          </p>
         </motion.div>
 
         {/* TRUSTINDEX-STYLE GOOGLE REVIEWS SUMMARY HEADER BAR */}
@@ -95,15 +91,15 @@ export default function TestimonialsSection() {
             </div>
           </div>
 
-          {/* Right: Direct GBP Review CTA + FishingBooker Secondary Link */}
+          {/* Right: Direct Google Write-a-Review CTA + FishingBooker Secondary Link */}
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 shrink-0">
             <a
-              href={SITE_INFO.googleReviewsUrl}
+              href={SITE_INFO.googleWriteReviewUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="btn-copper inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl text-white text-xs sm:text-sm font-bold uppercase tracking-wider"
             >
-              Read All {SITE_INFO.googleReviewCount} Google Reviews
+              Write a Review
               <ExternalLink className="w-3.5 h-3.5" />
             </a>
 

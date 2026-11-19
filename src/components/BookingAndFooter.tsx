@@ -17,8 +17,9 @@ import {
   CalendarDays,
   ChevronLeft,
   ChevronRight,
+  Minus,
+  Plus,
   ShieldCheck,
-  Clock,
   X,
 } from "lucide-react";
 import { NAV_ITEMS, SITE_INFO } from "@/data/charterData";
@@ -32,11 +33,11 @@ interface BookingAndFooterProps {
   selectedTier: string;
 }
 
-const ANGLER_OPTIONS = [
-  "1–2 Anglers ($550)",
-  "3 Anglers ($600)",
-  "4 Anglers ($650)",
-  "5+ Multi-Boat Group",
+const ANGLER_TIERS = [
+  { count: 2, label: "1–2 Anglers", rate: "$550" },
+  { count: 3, label: "3 Anglers", rate: "$600" },
+  { count: 4, label: "4 Anglers", rate: "$650" },
+  { count: 5, label: "5+ Anglers", rate: "Multi-Boat" },
 ];
 
 const WEEKDAYS = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
@@ -55,17 +56,51 @@ const MONTH_NAMES = [
   "December",
 ];
 
-function normalizeTierLabel(tier: string): string {
-  const cleaned = tier.replace("People", "Anglers");
-  if (ANGLER_OPTIONS.includes(cleaned)) return cleaned;
-  if (cleaned.includes("5+")) return "5+ Multi-Boat Group";
-  return "3 Anglers ($600)";
+function tierToAnglerCount(tier: string): number {
+  if (!tier) return 3;
+  if (tier.includes("1–2") || tier.includes("1-2") || tier.includes("550")) return 2;
+  if (tier.includes("4") || tier.includes("650")) return 4;
+  if (tier.includes("5+")) return 5;
+  return 3;
+}
+
+function getAnglerMeta(count: number) {
+  if (count <= 2) {
+    return {
+      shortLabel: count === 1 ? "1 Angler" : "2 Anglers",
+      rate: "$550",
+      subNote: "Private 5-hour charter · Flat boat rate",
+    };
+  }
+  if (count === 3) {
+    return {
+      shortLabel: "3 Anglers",
+      rate: "$600",
+      subNote: "Private 5-hour charter · Flat boat rate",
+    };
+  }
+  if (count === 4) {
+    return {
+      shortLabel: "4 Anglers",
+      rate: "$650",
+      subNote: "Private 5-hour charter · Flat boat rate",
+    };
+  }
+  return {
+    shortLabel: "5+ Anglers (Multi-Boat)",
+    rate: "Custom",
+    subNote: "Multiple private boats coordinated",
+  };
 }
 
 function formatDateISO(year: number, month: number, day: number): string {
   const m = String(month + 1).padStart(2, "0");
   const d = String(day).padStart(2, "0");
   return `${year}-${m}-${d}`;
+}
+
+function dateObjToISO(date: Date): string {
+  return formatDateISO(date.getFullYear(), date.getMonth(), date.getDate());
 }
 
 function formatDateReadable(iso: string): string {
@@ -82,16 +117,16 @@ function formatDateReadable(iso: string): string {
 }
 
 export default function BookingAndFooter({ selectedTier }: BookingAndFooterProps) {
-  const [groupSize, setGroupSize] = useState<string>(() =>
-    normalizeTierLabel(selectedTier || "3 Anglers ($600)")
+  const [anglerCount, setAnglerCount] = useState<number>(() =>
+    tierToAnglerCount(selectedTier || "3 Anglers ($600)")
   );
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [preferredDate, setPreferredDate] = useState("");
-  const [wantLodging, setWantLodging] = useState(false);
   const [notes, setNotes] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const [requestRef, setRequestRef] = useState("");
 
   // SSR-safe interactive calendar state (hydrated on client mount to prevent any timezone mismatch)
   const [today, setToday] = useState<Date | null>(null);
@@ -108,12 +143,28 @@ export default function BookingAndFooter({ selectedTier }: BookingAndFooterProps
 
   useEffect(() => {
     if (!selectedTier) return;
-    if (selectedTier.toLowerCase().includes("lodging")) {
-      setWantLodging(true);
-    } else {
-      setGroupSize(normalizeTierLabel(selectedTier));
-    }
+    setAnglerCount(tierToAnglerCount(selectedTier));
   }, [selectedTier]);
+
+  const anglerMeta = getAnglerMeta(anglerCount);
+
+  const quickDates = useMemo(() => {
+    if (!today) return { weekendISO: "", nextWeekISO: "" };
+    const dayOfWeek = today.getDay();
+    const daysToSat = dayOfWeek === 6 ? 7 : 6 - dayOfWeek;
+    const weekend = new Date(today);
+    weekend.setDate(today.getDate() + daysToSat);
+
+    const nextWeek = new Date(today);
+    nextWeek.setDate(today.getDate() + 7);
+
+    return {
+      weekendISO: dateObjToISO(weekend),
+      weekendDate: weekend,
+      nextWeekISO: dateObjToISO(nextWeek),
+      nextWeekDate: nextWeek,
+    };
+  }, [today]);
 
   const calendarCells = useMemo(() => {
     const firstDayOfMonth = new Date(viewYear, viewMonth, 1).getDay();
@@ -166,31 +217,40 @@ export default function BookingAndFooter({ selectedTier }: BookingAndFooterProps
     }
   };
 
+  const selectQuickDate = (dateObj?: Date, iso?: string) => {
+    if (!dateObj || !iso) return;
+    setPreferredDate(iso);
+    setViewYear(dateObj.getFullYear());
+    setViewMonth(dateObj.getMonth());
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    const randomCode = Math.floor(1000 + Math.random() * 9000);
+    setRequestRef(`REQ-${randomCode}`);
     setSubmitted(true);
   };
 
   return (
     <>
-      {/* SECTION 11: FINAL BOOKING CTA — DRAMATIC BAYOU PHOTO BACKDROP + CALENDAR BOOKING APP CARD */}
+      {/* SECTION 11: FINAL BOOKING CTA / CONTACT — DRAMATIC BAYOU PHOTO + BOOKING-APP SPLIT CARD */}
       <section
         id="booking"
         className="relative py-20 lg:py-28 scroll-mt-20 overflow-hidden bg-[#152B27]"
       >
-        {/* Full-Width Dramatic South Louisiana Bayou Backdrop */}
+        {/* Full-Width Dramatic South Louisiana Marshland Backdrop */}
         <div className="absolute inset-0">
           <img
             src="/images/art/hero-cypress-bayou.jpg"
-            alt="Sunrise light over calm South Louisiana bayou marshes in Lafitte"
+            alt="Golden sunrise light over calm South Louisiana bayou marshlands"
             loading="lazy"
             className="w-full h-full object-cover object-center"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-[#132622]/90 via-[#1A3530]/84 to-[#142824]/94" />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#132622]/82 via-[#19332E]/72 to-[#132622]/90" />
         </div>
 
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          {/* Editorial Section Header */}
+          {/* Section Header strictly aligned to NOSFC - Brief */}
           <motion.div
             initial={{ opacity: 0, y: 18 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -199,18 +259,18 @@ export default function BookingAndFooter({ selectedTier }: BookingAndFooterProps
             className="text-center max-w-2xl mx-auto mb-10 lg:mb-12"
           >
             <span className="block text-xs uppercase tracking-[0.22em] font-bold text-[#E5A780]">
-              Reserve Your Lafitte Inshore Charter
+              Book Your Fishing Charter
             </span>
             <h2 className="mt-2.5 font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-[#F6F1E7] tracking-tight leading-[1.12]">
               Ready to Fish the Bayou?
             </h2>
-            <p className="mt-3.5 text-sm sm:text-base text-[#F6F1E7]/85 leading-relaxed">
-              Let&apos;s get you on the water. Pick your preferred date and reach out to{" "}
-              {SITE_INFO.captain} to plan your private Louisiana fishing adventure.
+            <p className="mt-3.5 text-sm sm:text-base text-[#F6F1E7]/88 leading-relaxed">
+              Let&apos;s get you on the water. Reach out to Captain Jason to plan your Louisiana
+              fishing adventure.
             </p>
           </motion.div>
 
-          {/* Booking-App-Style Split Card: Interactive Visual Calendar + Inquiry Form */}
+          {/* Booking-App Split Card: Interactive Visual Calendar Left + Short Availability Form Right */}
           <motion.div
             initial={{ opacity: 0, y: 22 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -219,51 +279,79 @@ export default function BookingAndFooter({ selectedTier }: BookingAndFooterProps
             className="rounded-3xl overflow-hidden bg-[#F6F1E7] border-2 border-[#E5A780]/55 shadow-[0_34px_75px_-20px_rgba(5,14,12,0.75)]"
           >
             {submitted ? (
+              /* BOOKING-APP PENDING REQUEST TICKET */
               <motion.div
-                initial={{ opacity: 0, scale: 0.96 }}
+                initial={{ opacity: 0, scale: 0.98 }}
                 animate={{ opacity: 1, scale: 1 }}
-                className="py-16 px-6 sm:px-10 text-center max-w-xl mx-auto"
+                transition={{ duration: 0.3 }}
+                className="bg-white py-12 sm:py-14 px-6 sm:px-10"
               >
-                <div className="w-16 h-16 rounded-2xl bg-[#203F39]/10 text-[#203F39] flex items-center justify-center mx-auto mb-5">
-                  <CheckCircle2 className="w-9 h-9 text-[#BF754C]" />
-                </div>
-                <h3 className="font-display text-2xl sm:text-3xl font-bold text-[#203F39]">
-                  Charter Availability Request Sent
-                </h3>
-                <p className="mt-3 text-sm sm:text-base text-[#495754] leading-relaxed">
-                  Thanks{name ? `, ${name}` : ""}! Captain Jason will review availability for{" "}
-                  <strong className="text-[#203F39]">{groupSize}</strong>
-                  {preferredDate ? (
-                    <>
-                      {" "}
-                      on{" "}
-                      <strong className="text-[#203F39]">
-                        {formatDateReadable(preferredDate)}
-                      </strong>
-                    </>
-                  ) : (
-                    " (flexible dates)"
-                  )}
-                  {wantLodging ? " with Private Guest House lodging" : ""} and get back to you
-                  shortly.
-                </p>
-                <p className="mt-4 text-xs sm:text-sm text-[#5A6864]">
-                  Prefer to confirm right away? Call or text{" "}
-                  <a
-                    href={SITE_INFO.phoneHref}
-                    className="font-bold text-[#BF754C] hover:text-[#203F39] underline underline-offset-4"
+                <div className="max-w-xl mx-auto text-center">
+                  <div className="w-16 h-16 rounded-2xl bg-[#203F39] text-[#E5A780] flex items-center justify-center mx-auto mb-5 shadow-md">
+                    <CheckCircle2 className="w-8 h-8" />
+                  </div>
+
+                  <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FAF6EE] border border-[#BF754C]/40 text-[11px] font-bold uppercase tracking-[0.14em] text-[#BF754C]">
+                    Pending Captain Confirmation · {requestRef}
+                  </span>
+
+                  <h3 className="mt-3 font-display text-2xl sm:text-3xl font-bold text-[#203F39]">
+                    We&apos;ve Got Your Charter Request
+                  </h3>
+                  <p className="mt-2.5 text-sm sm:text-base text-[#495754] leading-relaxed">
+                    Thanks{name ? `, ${name}` : ""}! This is an availability inquiry—not an instant
+                    reservation. Captain Jason will review the schedule and reach out personally to
+                    confirm your trip.
+                  </p>
+
+                  {/* Request Summary Ticket */}
+                  <div className="mt-6 rounded-2xl bg-[#FAF6EE] border border-[#849481]/40 p-4 sm:p-5 grid grid-cols-1 sm:grid-cols-3 gap-4 text-left">
+                    <div>
+                      <p className="text-[10px] font-bold uppercase tracking-wider text-[#6B7A74]">
+                        Preferred Date
+                      </p>
+                      <p className="mt-0.5 text-sm font-bold text-[#203F39]">
+                        {preferredDate ? formatDateReadable(preferredDate) : "Flexible Dates"}
+                      </p>
+                    </div>
+                    <div>
+                      <p className="text-[10px] font-bold uppercase tracking-wider text-[#6B7A74]">
+                        Party Size
+                      </p>
+                      <p className="mt-0.5 text-sm font-bold text-[#203F39]">
+                        {anglerMeta.shortLabel}
+                      </p>
+                    </div>
+                    <div>
+                      <p className="text-[10px] font-bold uppercase tracking-wider text-[#6B7A74]">
+                        Est. Charter Rate
+                      </p>
+                      <p className="mt-0.5 text-sm font-bold text-[#203F39]">
+                        {anglerMeta.rate}{" "}
+                        <span className="text-xs font-medium text-[#5A6864]">($0 due today)</span>
+                      </p>
+                    </div>
+                  </div>
+
+                  <p className="mt-5 text-xs sm:text-sm text-[#495754]">
+                    Prefer to talk? Call Captain Jason at{" "}
+                    <a
+                      href={SITE_INFO.phoneHref}
+                      className="font-bold text-[#203F39] hover:text-[#BF754C] underline underline-offset-4 transition-colors"
+                    >
+                      {SITE_INFO.phone}
+                    </a>
+                    .
+                  </p>
+
+                  <button
+                    type="button"
+                    onClick={() => setSubmitted(false)}
+                    className="mt-6 px-6 py-3 rounded-xl bg-[#203F39] hover:bg-[#BF754C] text-[#F6F1E7] text-xs sm:text-sm font-bold uppercase tracking-wider transition-colors cursor-pointer"
                   >
-                    {SITE_INFO.phone}
-                  </a>{" "}
-                  ({SITE_INFO.hours}).
-                </p>
-                <button
-                  type="button"
-                  onClick={() => setSubmitted(false)}
-                  className="mt-6 px-6 py-3 rounded-lg bg-[#203F39] hover:bg-[#BF754C] text-[#F6F1E7] text-xs sm:text-sm font-bold uppercase tracking-wider transition-colors cursor-pointer"
-                >
-                  Request Another Date
-                </button>
+                    Request Another Date
+                  </button>
+                </div>
               </motion.div>
             ) : (
               <form
@@ -273,24 +361,63 @@ export default function BookingAndFooter({ selectedTier }: BookingAndFooterProps
                 {/* LEFT PANE: INTERACTIVE VISUAL CALENDAR DATE PICKER */}
                 <div className="lg:col-span-5 bg-white p-6 sm:p-8 border-b lg:border-b-0 lg:border-r border-[#849481]/25 flex flex-col justify-between">
                   <div>
-                    <div className="flex items-center justify-between gap-2 pb-4 border-b border-[#849481]/20">
-                      <div className="flex items-center gap-2.5">
-                        <span className="w-8 h-8 rounded-lg bg-[#203F39] text-[#E5A780] flex items-center justify-center shrink-0">
-                          <CalendarDays className="w-4 h-4" />
-                        </span>
-                        <div>
-                          <p className="text-[11px] font-bold uppercase tracking-wider text-[#BF754C]">
-                            Step 1 of 2
-                          </p>
-                          <h3 className="font-display text-base sm:text-lg font-bold text-[#203F39] leading-tight">
-                            Select Preferred Date
-                          </h3>
-                        </div>
+                    <div className="flex items-center gap-2.5 pb-4 border-b border-[#849481]/20">
+                      <span className="w-8 h-8 rounded-lg bg-[#203F39] text-[#E5A780] flex items-center justify-center shrink-0">
+                        <CalendarDays className="w-4 h-4" />
+                      </span>
+                      <div>
+                        <p className="text-[11px] font-bold uppercase tracking-wider text-[#BF754C]">
+                          Step 1 of 2
+                        </p>
+                        <h3 className="font-display text-base sm:text-lg font-bold text-[#203F39] leading-tight">
+                          Preferred Charter Date
+                        </h3>
                       </div>
                     </div>
 
+                    {/* Quick-Pick Date Shortcuts */}
+                    <div className="mt-4 flex flex-wrap items-center gap-1.5">
+                      <button
+                        type="button"
+                        onClick={() =>
+                          selectQuickDate(quickDates.weekendDate, quickDates.weekendISO)
+                        }
+                        className={`px-2.5 py-1.5 rounded-lg text-[11px] font-bold border transition-colors cursor-pointer ${
+                          preferredDate && preferredDate === quickDates.weekendISO
+                            ? "bg-[#203F39] text-[#F6F1E7] border-[#203F39]"
+                            : "bg-[#FAF6EE] text-[#203F39] border-[#849481]/40 hover:border-[#BF754C]"
+                        }`}
+                      >
+                        This Weekend
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() =>
+                          selectQuickDate(quickDates.nextWeekDate, quickDates.nextWeekISO)
+                        }
+                        className={`px-2.5 py-1.5 rounded-lg text-[11px] font-bold border transition-colors cursor-pointer ${
+                          preferredDate && preferredDate === quickDates.nextWeekISO
+                            ? "bg-[#203F39] text-[#F6F1E7] border-[#203F39]"
+                            : "bg-[#FAF6EE] text-[#203F39] border-[#849481]/40 hover:border-[#BF754C]"
+                        }`}
+                      >
+                        Next Week
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setPreferredDate("")}
+                        className={`px-2.5 py-1.5 rounded-lg text-[11px] font-bold border transition-colors cursor-pointer ${
+                          !preferredDate
+                            ? "bg-[#203F39] text-[#F6F1E7] border-[#203F39]"
+                            : "bg-[#FAF6EE] text-[#203F39] border-[#849481]/40 hover:border-[#BF754C]"
+                        }`}
+                      >
+                        Flexible
+                      </button>
+                    </div>
+
                     {/* Month Header & Controls */}
-                    <div className="mt-5 flex items-center justify-between">
+                    <div className="mt-4 flex items-center justify-between">
                       <button
                         type="button"
                         onClick={handlePrevMonth}
@@ -343,9 +470,9 @@ export default function BookingAndFooter({ selectedTier }: BookingAndFooterProps
                             aria-pressed={isSelected}
                             className={`h-9 sm:h-10 rounded-lg text-xs sm:text-sm font-semibold transition-all flex items-center justify-center ${
                               cell.isPast
-                                ? "text-[#849481]/45 cursor-not-allowed"
+                                ? "text-[#849481]/40 cursor-not-allowed"
                                 : isSelected
-                                ? "bg-[#BF754C] text-white font-bold shadow-md scale-[1.03] cursor-pointer"
+                                ? "bg-[#BF754C] text-white font-bold shadow-md scale-[1.04] cursor-pointer"
                                 : cell.isToday
                                 ? "bg-[#F6F1E7] text-[#203F39] ring-1 ring-[#BF754C] hover:bg-[#203F39] hover:text-white cursor-pointer"
                                 : "text-[#26302E] hover:bg-[#F6F1E7] hover:text-[#203F39] cursor-pointer"
@@ -357,16 +484,16 @@ export default function BookingAndFooter({ selectedTier }: BookingAndFooterProps
                       })}
                     </div>
 
-                    {/* Selected Date Summary Pill */}
-                    <div className="mt-4 rounded-xl bg-[#F6F1E7] border-2 border-[#849481]/45 px-3.5 py-2.5 flex items-center justify-between gap-2">
+                    {/* Selected Date Summary Readout */}
+                    <div className="mt-4 rounded-xl bg-[#FAF6EE] border border-[#849481]/40 px-3.5 py-2.5 flex items-center justify-between gap-2">
                       <div className="min-w-0">
                         <p className="text-[10px] font-bold uppercase tracking-wider text-[#6B7A74]">
-                          Preferred Charter Date
+                          Selected Date
                         </p>
                         <p className="text-xs sm:text-sm font-bold text-[#203F39] truncate">
                           {preferredDate
                             ? formatDateReadable(preferredDate)
-                            : "Flexible — Pick any date or leave open"}
+                            : "Flexible — Tap a date or leave open"}
                         </p>
                       </div>
                       {preferredDate && (
@@ -382,80 +509,166 @@ export default function BookingAndFooter({ selectedTier }: BookingAndFooterProps
                     </div>
                   </div>
 
-                  {/* Verified Deposit & Payment Reassurance */}
-                  <div className="mt-6 pt-4 border-t border-[#849481]/20 space-y-2 text-xs text-[#495754]">
-                    <p className="flex items-start gap-2">
+                  {/* Live Estimated Rate + Availability Inquiry Notice */}
+                  <div className="mt-6 pt-4 border-t border-[#849481]/20 space-y-3">
+                    <div className="flex items-baseline justify-between gap-2">
+                      <div>
+                        <span className="block text-[11px] font-bold uppercase tracking-wider text-[#203F39]">
+                          Est. Charter Rate
+                        </span>
+                        <span className="block text-[11px] text-[#5A6864]">
+                          {anglerMeta.shortLabel} · Per charter, not per person
+                        </span>
+                      </div>
+                      <div className="text-right">
+                        <motion.span
+                          key={anglerMeta.rate}
+                          initial={{ opacity: 0.4, y: -4 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ duration: 0.2 }}
+                          className="block font-display text-2xl font-bold text-[#203F39] leading-none"
+                        >
+                          {anglerMeta.rate}
+                        </motion.span>
+                        <span className="text-[11px] font-semibold text-[#BF754C]">
+                          $0 due today
+                        </span>
+                      </div>
+                    </div>
+
+                    <p className="flex items-start gap-2 text-xs text-[#495754] leading-relaxed">
                       <ShieldCheck className="w-4 h-4 text-[#BF754C] shrink-0 mt-0.5" />
                       <span>
-                        <strong className="text-[#203F39]">Availability request:</strong> No charge
-                        today. A ${SITE_INFO.deposit} deposit per day holds your boat once Capt.
-                        Jason confirms.
-                      </span>
-                    </p>
-                    <p className="flex items-start gap-2">
-                      <Clock className="w-4 h-4 text-[#BF754C] shrink-0 mt-0.5" />
-                      <span>
-                        No deposit charged for inclement weather · {SITE_INFO.cancellationDays}-day
-                        advance cancellation refund · {SITE_INFO.paymentMethods}.
+                        <strong className="text-[#203F39]">Availability inquiry only:</strong> Not
+                        an instant booking. Captain Jason will reach out personally to confirm your
+                        date.
                       </span>
                     </p>
                   </div>
                 </div>
 
-                {/* RIGHT PANE: PARTY SIZE, CONTACT FIELDS & SUBMIT */}
+                {/* RIGHT PANE: PARTY SIZE, CONTACT DETAILS & SUBMIT */}
                 <div className="lg:col-span-7 p-6 sm:p-8 lg:p-9 flex flex-col justify-between">
-                  <div className="space-y-5">
-                    <div className="pb-4 border-b border-[#849481]/25">
-                      <p className="text-[11px] font-bold uppercase tracking-wider text-[#BF754C]">
-                        Step 2 of 2
-                      </p>
-                      <h3 className="font-display text-xl sm:text-2xl font-bold text-[#203F39]">
-                        Your Crew &amp; Contact Info
-                      </h3>
-                      <p className="text-xs sm:text-sm text-[#495754] mt-1">
-                        Private 5-hour Lafitte inshore charters — all-inclusive pricing per boat.
-                      </p>
+                  <div className="space-y-4">
+                    <div className="pb-4 border-b border-[#849481]/25 flex flex-wrap items-center justify-between gap-2">
+                      <div>
+                        <p className="text-[11px] font-bold uppercase tracking-wider text-[#BF754C]">
+                          Step 2 of 2
+                        </p>
+                        <h3 className="font-display text-xl sm:text-2xl font-bold text-[#203F39]">
+                          Request Charter Availability
+                        </h3>
+                      </div>
+                      <span className="px-2.5 py-1 rounded-full bg-[#BF754C]/12 text-[#9F5C36] text-[11px] font-bold uppercase tracking-wider">
+                        Pending Confirmation
+                      </span>
                     </div>
 
-                    {/* Number of Anglers Selector Pills */}
-                    <div>
-                      <span className="block text-xs font-bold uppercase tracking-wider text-[#203F39] mb-2">
-                        Number of Anglers
-                      </span>
-                      <div className="grid grid-cols-2 gap-2">
-                        {ANGLER_OPTIONS.map((opt) => (
+                    {/* Number of Anglers: Interactive Stepper + Rate Tiers */}
+                    <div className="rounded-2xl bg-white/80 border border-[#849481]/30 p-3.5 sm:p-4">
+                      <div className="flex items-center justify-between gap-3">
+                        <div>
+                          <span className="block text-xs font-bold uppercase tracking-wider text-[#203F39]">
+                            Number of Anglers
+                          </span>
+                          <span className="block text-xs text-[#5A6864] mt-0.5">
+                            {anglerMeta.subNote}
+                          </span>
+                        </div>
+
+                        <div className="inline-flex items-center gap-1.5 bg-[#FAF6EE] rounded-xl border border-[#849481]/40 p-1 shrink-0">
                           <button
-                            key={opt}
                             type="button"
-                            onClick={() => setGroupSize(opt)}
-                            className={`px-3 py-2.5 rounded-lg text-xs sm:text-[13px] font-bold border transition-all cursor-pointer ${
-                              groupSize === opt
-                                ? "bg-[#203F39] text-[#F6F1E7] border-[#203F39] shadow-sm"
-                                : "bg-white text-[#203F39] border-[#849481]/35 hover:border-[#BF754C]"
-                            }`}
+                            onClick={() => setAnglerCount((c) => Math.max(1, c - 1))}
+                            disabled={anglerCount <= 1}
+                            aria-label="Decrease number of anglers"
+                            className="w-7 h-7 rounded-lg bg-white flex items-center justify-center text-[#203F39] hover:border-[#BF754C] disabled:opacity-30 disabled:cursor-not-allowed transition-colors cursor-pointer"
                           >
-                            {opt}
+                            <Minus className="w-3.5 h-3.5" />
                           </button>
-                        ))}
+                          <span className="w-8 text-center font-display text-sm sm:text-base font-bold text-[#203F39]">
+                            {anglerCount === 5 ? "5+" : anglerCount}
+                          </span>
+                          <button
+                            type="button"
+                            onClick={() => setAnglerCount((c) => Math.min(5, c + 1))}
+                            disabled={anglerCount >= 5}
+                            aria-label="Increase number of anglers"
+                            className="w-7 h-7 rounded-lg bg-white flex items-center justify-center text-[#203F39] hover:border-[#BF754C] disabled:opacity-30 disabled:cursor-not-allowed transition-colors cursor-pointer"
+                          >
+                            <Plus className="w-3.5 h-3.5" />
+                          </button>
+                        </div>
+                      </div>
+
+                      <div className="mt-3 grid grid-cols-2 sm:grid-cols-4 gap-2">
+                        {ANGLER_TIERS.map((tier) => {
+                          const isActive =
+                            (tier.count === 2 && anglerCount <= 2) ||
+                            tier.count === anglerCount;
+                          return (
+                            <button
+                              key={tier.label}
+                              type="button"
+                              onClick={() => setAnglerCount(tier.count)}
+                              aria-pressed={isActive}
+                              className={`px-2 py-2 rounded-xl border text-center transition-all cursor-pointer ${
+                                isActive
+                                  ? "bg-[#203F39] text-[#F6F1E7] border-[#203F39] shadow-xs"
+                                  : "bg-white text-[#203F39] border-[#849481]/35 hover:border-[#BF754C]"
+                              }`}
+                            >
+                              <span className="block text-[11px] font-bold leading-tight">
+                                {tier.label}
+                              </span>
+                              <span
+                                className={`block mt-0.5 text-[11px] font-semibold ${
+                                  isActive ? "text-[#E5A780]" : "text-[#5A6864]"
+                                }`}
+                              >
+                                {tier.rate}
+                              </span>
+                            </button>
+                          );
+                        })}
                       </div>
                     </div>
 
-                    {/* Name & Phone */}
+                    {/* Name */}
+                    <div>
+                      <label
+                        htmlFor="booking-name"
+                        className="block text-xs font-bold uppercase tracking-wider text-[#203F39] mb-1.5"
+                      >
+                        Name *
+                      </label>
+                      <input
+                        id="booking-name"
+                        type="text"
+                        required
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        placeholder="Your full name"
+                        className="w-full px-3.5 py-2.5 rounded-lg bg-white border border-[#849481]/40 focus:border-[#BF754C] focus:ring-2 focus:ring-[#BF754C]/20 focus:outline-none text-sm text-[#26302E] transition-colors"
+                      />
+                    </div>
+
+                    {/* Email & Phone */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div>
                         <label
-                          htmlFor="booking-name"
+                          htmlFor="booking-email"
                           className="block text-xs font-bold uppercase tracking-wider text-[#203F39] mb-1.5"
                         >
-                          Name *
+                          Email *
                         </label>
                         <input
-                          id="booking-name"
-                          type="text"
+                          id="booking-email"
+                          type="email"
                           required
-                          value={name}
-                          onChange={(e) => setName(e.target.value)}
-                          placeholder="Your full name"
+                          value={email}
+                          onChange={(e) => setEmail(e.target.value)}
+                          placeholder="you@email.com"
                           className="w-full px-3.5 py-2.5 rounded-lg bg-white border border-[#849481]/40 focus:border-[#BF754C] focus:ring-2 focus:ring-[#BF754C]/20 focus:outline-none text-sm text-[#26302E] transition-colors"
                         />
                       </div>
@@ -479,41 +692,6 @@ export default function BookingAndFooter({ selectedTier }: BookingAndFooterProps
                       </div>
                     </div>
 
-                    {/* Email */}
-                    <div>
-                      <label
-                        htmlFor="booking-email"
-                        className="block text-xs font-bold uppercase tracking-wider text-[#203F39] mb-1.5"
-                      >
-                        Email *
-                      </label>
-                      <input
-                        id="booking-email"
-                        type="email"
-                        required
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        placeholder="you@email.com"
-                        className="w-full px-3.5 py-2.5 rounded-lg bg-white border border-[#849481]/40 focus:border-[#BF754C] focus:ring-2 focus:ring-[#BF754C]/20 focus:outline-none text-sm text-[#26302E] transition-colors"
-                      />
-                    </div>
-
-                    {/* Optional Private Guest House Lodging Checkbox */}
-                    <label className="flex items-start gap-3 p-3.5 rounded-xl bg-white border-2 border-[#849481]/45 cursor-pointer hover:border-[#BF754C] transition-colors">
-                      <input
-                        type="checkbox"
-                        checked={wantLodging}
-                        onChange={(e) => setWantLodging(e.target.checked)}
-                        className="mt-0.5 w-4 h-4 accent-[#BF754C] rounded shrink-0"
-                      />
-                      <span className="text-xs sm:text-sm text-[#3A4643] leading-snug">
-                        Also check availability for the{" "}
-                        <strong className="text-[#203F39]">
-                          Private Guest House Rental ($200/night up to 4 guests, sleeps 8)
-                        </strong>
-                      </span>
-                    </label>
-
                     {/* Message / Questions */}
                     <div>
                       <label
@@ -524,23 +702,23 @@ export default function BookingAndFooter({ selectedTier }: BookingAndFooterProps
                       </label>
                       <textarea
                         id="booking-notes"
-                        rows={3}
+                        rows={2}
                         value={notes}
                         onChange={(e) => setNotes(e.target.value)}
-                        placeholder="Tell us about your group (first-time anglers, kids ages 4+, evening charter request, or NOLA pickup questions)..."
+                        placeholder="Any questions about start times, experience levels, or special requests..."
                         className="w-full px-3.5 py-2.5 rounded-lg bg-white border border-[#849481]/40 focus:border-[#BF754C] focus:ring-2 focus:ring-[#BF754C]/20 focus:outline-none text-sm text-[#26302E] transition-colors resize-none"
                       />
                     </div>
                   </div>
 
-                  {/* Primary Submit CTA + Prefer-to-Talk Line */}
-                  <div className="mt-6 space-y-3.5">
+                  {/* Primary Submit CTA + Prefer-to-Talk Contact Line */}
+                  <div className="mt-6 space-y-3">
                     <button
                       type="submit"
-                      className="btn-copper w-full py-4 px-6 rounded-xl text-white text-sm font-bold uppercase tracking-wider inline-flex items-center justify-center gap-2.5 cursor-pointer"
+                      className="btn-copper w-full py-3.5 px-6 rounded-xl text-white text-sm font-bold uppercase tracking-wider inline-flex items-center justify-center gap-2.5 cursor-pointer"
                     >
                       <Send className="w-4 h-4" />
-                      Book Your Fishing Charter
+                      Request Charter Availability
                     </button>
 
                     <p className="text-center text-xs sm:text-sm text-[#495754]">
@@ -550,8 +728,8 @@ export default function BookingAndFooter({ selectedTier }: BookingAndFooterProps
                         className="font-bold text-[#203F39] hover:text-[#BF754C] underline underline-offset-4 transition-colors"
                       >
                         {SITE_INFO.phone}
-                      </a>{" "}
-                      <span className="text-[#6B7A74]">({SITE_INFO.hours})</span>
+                      </a>
+                      .
                     </p>
                   </div>
                 </div>

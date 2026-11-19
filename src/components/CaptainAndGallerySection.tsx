@@ -90,8 +90,12 @@ export function CaptainSection() {
             <span className="inline-block text-xs uppercase tracking-[0.2em] font-bold text-[#BF754C]">
               Your Local Louisiana Fishing Guide
             </span>
-            <h2 className="mt-2.5 font-display text-3xl sm:text-4xl lg:text-[42px] font-bold text-[#203F39] tracking-tight leading-[1.16]">
-              Good Fishing. Great Company. True Southern Hospitality.
+            <h2 className="mt-2.5 font-display text-3xl sm:text-4xl lg:text-[38px] xl:text-[42px] font-bold text-[#203F39] tracking-tight leading-[1.16]">
+              Good Fishing.
+              <br />
+              Great Company.
+              <br />
+              True Southern Hospitality.
             </h2>
 
             <div className="mt-5 space-y-4 text-[#3D4A47] text-[15px] sm:text-base leading-relaxed">

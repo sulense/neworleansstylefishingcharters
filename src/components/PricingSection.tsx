@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { Ship, Anchor, Fish } from "lucide-react";
 import { SITE_INFO } from "@/data/charterData";
 import {
   BayouStampWatermark,
@@ -18,17 +17,17 @@ interface PricingSectionProps {
 // Section 6: What's Included strictly aligned to NOSFC - Brief
 const INCLUDED_PILLARS = [
   {
-    icon: Ship,
+    icon: "/images/art/included/boat-captain.png",
     title: "Boat & Professional Captain",
     detail: "Private charter boat, experienced guide, fuel, and necessary boating equipment.",
   },
   {
-    icon: Anchor,
+    icon: "/images/art/included/rods-tackle.png",
     title: "Rods, Reels, Bait & Tackle",
     detail: "Fishing equipment and bait provided for your adventure.",
   },
   {
-    icon: Fish,
+    icon: "/images/art/included/fish-cleaning.png",
     title: "Fish Cleaning & Packing",
     detail: "We'll clean and pack your eligible keepers so they're ready to bring home.",
   },
@@ -174,16 +173,16 @@ export default function PricingSection({ onSelectTier }: PricingSectionProps) {
 
         {/* Per-Charter Clarification, $150 Deposit Note & Primary CTA */}
         <div className="mt-8 max-w-xl mx-auto text-center">
-          <p className="text-sm sm:text-base font-semibold text-[#E5A780]">
+          <p className="text-sm sm:text-base text-[#E5A780]">
             Pricing is per charter, not per person.
           </p>
 
           <p className="mt-3 text-xs sm:text-sm text-[#F6F1E7]/80 leading-relaxed">
-            A <strong className="text-white font-semibold">${SITE_INFO.deposit} reservation deposit</strong>{" "}
+            A <strong>${SITE_INFO.deposit} reservation deposit</strong>{" "}
             is required to reserve your charter date.{" "}
             <Link
               href="/charter-info"
-              className="font-semibold text-[#E5A780] hover:text-white underline underline-offset-4 transition-colors"
+              className="text-[#E5A780] hover:text-white underline underline-offset-4 transition-colors"
             >
               View full charter details &amp; cancellation policies →
             </Link>
@@ -192,7 +191,7 @@ export default function PricingSection({ onSelectTier }: PricingSectionProps) {
           <div className="mt-7">
             <Link
               href="/contact"
-              className="btn-copper w-full sm:w-auto inline-flex items-center justify-center text-white px-8 py-3.5 rounded-xl text-xs sm:text-sm font-bold uppercase tracking-[0.14em]"
+              className="btn-copper w-full sm:w-auto inline-flex items-center justify-center text-white px-8 py-4 rounded-xl text-sm sm:text-[15px] font-extrabold uppercase tracking-[0.14em]"
             >
               Request Your Charter Date
             </Link>
@@ -221,7 +220,6 @@ export default function PricingSection({ onSelectTier }: PricingSectionProps) {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
             {INCLUDED_PILLARS.map((item, idx) => {
-              const Icon = item.icon;
               return (
                 <motion.div
                   key={item.title}
@@ -231,9 +229,15 @@ export default function PricingSection({ onSelectTier }: PricingSectionProps) {
                   transition={{ duration: 0.5, delay: idx * 0.08 }}
                   className="group relative rounded-2xl bg-[#162D29]/85 border border-[#849481]/45 hover:border-[#E5A780]/75 transition-all duration-300 hover:-translate-y-1 p-7 text-center flex flex-col items-center shadow-[0_18px_36px_-16px_rgba(6,16,14,0.55)]"
                 >
-                  <div className="w-12 h-12 rounded-xl bg-[#BF754C]/20 border border-[#BF754C]/55 group-hover:bg-[#BF754C] text-[#E5A780] group-hover:text-white flex items-center justify-center mb-4 transition-colors duration-300">
-                    <Icon className="w-6 h-6" />
-                  </div>
+                  <img
+                    src={item.icon}
+                    alt=""
+                    aria-hidden="true"
+                    width={96}
+                    height={96}
+                    loading="lazy"
+                    className="w-24 h-24 mb-5 rounded-full shadow-[0_14px_28px_-12px_rgba(0,0,0,0.65)] ring-1 ring-[#E5A780]/25 group-hover:ring-[#E5A780]/70 transition-all duration-300 group-hover:scale-105 group-hover:-rotate-3"
+                  />
                   <h3 className="font-display text-lg font-bold text-[#F6F1E7]">
                     {item.title}
                   </h3>

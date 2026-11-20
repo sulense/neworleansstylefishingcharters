@@ -3,13 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
-import {
-  ArrowRight,
-  Send,
-  CheckCircle2,
-  Star,
-  ChevronDown,
-} from "lucide-react";
+import { ArrowRight, PaperPlaneTilt as Send, CheckCircle as CheckCircle2, Star, CaretDown as ChevronDown } from "@phosphor-icons/react/dist/ssr";
 import { SITE_INFO } from "@/data/charterData";
 import {
   FishingBookerHeroBadge,
@@ -179,11 +173,11 @@ export default function HeroSection() {
               className="mt-4 sm:mt-5 text-sm sm:text-base lg:text-[16.5px] text-[#F6F1E7]/92 max-w-xl leading-relaxed drop-shadow-[0_2px_8px_rgba(0,0,0,0.55)]"
             >
               Private{" "}
-              <strong className="text-white font-semibold">
+              <strong>
                 New Orleans inshore fishing charters
               </strong>{" "}
               through the beautiful bayous and marshes of South Louisiana with{" "}
-              <strong className="text-white font-semibold">{SITE_INFO.captain}</strong>. Great
+              <strong>{SITE_INFO.captain}</strong>. Great
               fishing, Southern hospitality, and memories that last a lifetime.
             </motion.p>
 
@@ -196,15 +190,15 @@ export default function HeroSection() {
             >
               <Link
                 href="/contact"
-                className="btn-copper w-full sm:w-auto justify-center inline-flex items-center gap-2 text-white px-6 py-3.5 rounded-lg text-sm font-bold uppercase tracking-wider group"
+                className="btn-copper w-full sm:w-auto justify-center inline-flex items-center gap-2 text-white px-6 py-4 rounded-lg text-[15px] font-extrabold uppercase tracking-wider group"
               >
                 Book Your Charter
-                <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" weight="bold" />
               </Link>
 
               <Link
                 href="/charter-info"
-                className="w-full sm:w-auto justify-center inline-flex items-center gap-2 px-6 py-3.5 rounded-lg bg-[#203F39]/75 hover:bg-[#F6F1E7] text-[#F6F1E7] hover:text-[#203F39] backdrop-blur-md border border-[#F6F1E7]/40 hover:border-[#F6F1E7] text-sm font-bold uppercase tracking-wider transition-all duration-200 hover:-translate-y-0.5"
+                className="w-full sm:w-auto justify-center inline-flex items-center gap-2 px-6 py-4 rounded-lg bg-[#203F39]/75 hover:bg-[#F6F1E7] text-[#F6F1E7] hover:text-[#203F39] backdrop-blur-md border-2 border-[#F6F1E7]/40 hover:border-[#F6F1E7] text-[15px] font-extrabold uppercase tracking-wider transition-all duration-200 hover:-translate-y-0.5"
               >
                 Explore Our Trips
               </Link>
@@ -215,17 +209,17 @@ export default function HeroSection() {
               initial={prefersReduced ? false : { opacity: 0, x: 50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.7, delay: 0.66, ease: [0.22, 1, 0.36, 1] }}
-              className="mt-8 pt-5 border-t border-[#F6F1E7]/20 max-w-2xl drop-shadow-[0_2px_10px_rgba(0,0,0,0.7)]"
+              className="mt-8 pt-5 border-t border-[#F6F1E7]/20 drop-shadow-[0_2px_10px_rgba(0,0,0,0.7)]"
             >
               {/* Signature Transparent Google Business Review Lockup + Clickable Official Review Emblems */}
-              <div className="flex flex-wrap items-center gap-x-5 gap-y-4">
+              <div className="flex flex-wrap lg:flex-nowrap items-center gap-x-4 gap-y-4">
                 {/* Google Business Review Signature Lockup (Matches Reference Layout) */}
                 <a
                   href={SITE_INFO.googleReviewsUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={`Google Business Review: ${SITE_INFO.googleRating} stars from ${SITE_INFO.googleReviewCount}+ Google reviews`}
-                  className="group inline-flex items-center gap-3.5 transition-transform duration-200 hover:-translate-y-0.5"
+                  className="group inline-flex items-center gap-3 shrink-0 transition-transform duration-200 hover:-translate-y-0.5"
                 >
                   <div className="flex flex-col">
                     {/* Top Row: Big Multicolor Google G + Stacked "Google Business Review" */}
@@ -249,6 +243,7 @@ export default function HeroSection() {
                       <div className="flex items-center gap-0.5">
                         {[1, 2, 3, 4, 5].map((s) => (
                           <Star
+                            weight="fill"
                             key={s}
                             className="w-4 h-4 text-[#FBC02D] fill-[#FBC02D] drop-shadow-[0_1px_2px_rgba(0,0,0,0.45)]"
                           />
@@ -258,7 +253,7 @@ export default function HeroSection() {
                   </div>
 
                   {/* Right Text Column: "from 202+ / Google reviews" */}
-                  <div className="text-left leading-snug text-xs sm:text-[13px] font-semibold text-[#F6F1E7]/92 group-hover:text-white transition-colors">
+                  <div className="text-left leading-snug text-xs font-semibold whitespace-nowrap text-[#F6F1E7]/92 group-hover:text-white transition-colors">
                     <span className="block">from {SITE_INFO.googleReviewCount}+</span>
                     <span className="block">Google reviews</span>
                   </div>
@@ -271,7 +266,7 @@ export default function HeroSection() {
                 />
 
                 {/* Right Clickable Official Review Emblems: FishingBooker + TripAdvisor + Yelp */}
-                <div className="flex items-center gap-2.5 sm:gap-3">
+                <div className="flex items-center gap-2.5 shrink-0">
                   <a
                     href={SITE_INFO.fishingBookerUrl}
                     target="_blank"
@@ -351,12 +346,12 @@ export default function HeroSection() {
                     </h3>
                     <p className="mt-2 text-sm text-[#4A5855] max-w-sm mx-auto leading-relaxed">
                       Thanks{firstName ? `, ${firstName}` : ""}! Captain Jason received your
-                      inquiry for <strong className="text-[#203F39]">{serviceNeed}</strong> and
+                      inquiry for <strong>{serviceNeed}</strong> and
                       will respond shortly to confirm availability.
                     </p>
                     <p className="mt-3 text-xs text-[#5B6B67]">
                       Prefer to call? Reach us at{" "}
-                      <a href={SITE_INFO.phoneHref} className="font-bold text-[#BF754C] underline">
+                      <a href={SITE_INFO.phoneHref} className="text-[#BF754C] underline">
                         {SITE_INFO.phone}
                       </a>{" "}
                       ({SITE_INFO.hours}).
@@ -364,7 +359,7 @@ export default function HeroSection() {
                     <button
                       type="button"
                       onClick={() => setSubmitted(false)}
-                      className="mt-5 px-5 py-2.5 rounded-lg bg-[#203F39] hover:bg-[#BF754C] text-white text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer"
+                      className="mt-5 px-5 py-3 rounded-lg bg-[#203F39] hover:bg-[#BF754C] text-white text-[13px] font-extrabold uppercase tracking-wider transition-colors cursor-pointer"
                     >
                       Send Another Request
                     </button>

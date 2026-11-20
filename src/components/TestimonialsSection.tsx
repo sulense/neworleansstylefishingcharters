@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Star, ExternalLink, BadgeCheck, ArrowUpRight } from "lucide-react";
+import { Star, ArrowSquareOut as ExternalLink, SealCheck as BadgeCheck, ArrowUpRight } from "@phosphor-icons/react/dist/ssr";
 import { SITE_INFO, TESTIMONIALS } from "@/data/charterData";
 import {
   BayouStampWatermark,
@@ -77,12 +77,12 @@ export default function TestimonialsSection() {
                   </span>
                   <div className="flex items-center gap-0.5">
                     {[1, 2, 3, 4, 5].map((s) => (
-                      <Star key={s} className="w-4 h-4 text-[#F4B400] fill-[#F4B400]" />
+                      <Star weight="fill" key={s} className="w-4 h-4 text-[#F4B400] fill-[#F4B400]" />
                     ))}
                   </div>
                   <span className="text-xs sm:text-sm text-[#495754]">
                     Based on{" "}
-                    <strong className="text-[#203F39]">
+                    <strong>
                       {SITE_INFO.googleReviewCount} Google reviews
                     </strong>
                   </span>
@@ -97,7 +97,7 @@ export default function TestimonialsSection() {
               href={SITE_INFO.googleWriteReviewUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-copper inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl text-white text-xs sm:text-sm font-bold uppercase tracking-wider"
+              className="btn-copper inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl text-white text-sm sm:text-[15px] font-extrabold uppercase tracking-wider"
             >
               Write a Review
               <ExternalLink className="w-3.5 h-3.5" />
@@ -177,7 +177,7 @@ export default function TestimonialsSection() {
                   <div className="mt-3.5 flex items-center gap-1.5">
                     <div className="flex items-center gap-0.5">
                       {Array.from({ length: review.rating }).map((_, i) => (
-                        <Star key={i} className="w-4 h-4 text-[#F4B400] fill-[#F4B400]" />
+                        <Star weight="fill" key={i} className="w-4 h-4 text-[#F4B400] fill-[#F4B400]" />
                       ))}
                     </div>
                     <BadgeCheck
@@ -238,12 +238,12 @@ export default function TestimonialsSection() {
 
               <div className="mt-2 flex items-center justify-center gap-1">
                 {[1, 2, 3, 4, 5].map((s) => (
-                  <Star key={s} className="w-4 h-4 text-[#F4B400] fill-[#F4B400]" />
+                  <Star weight="fill" key={s} className="w-4 h-4 text-[#F4B400] fill-[#F4B400]" />
                 ))}
               </div>
 
               <p className="mt-3 text-sm text-[#F6F1E7]/85 leading-relaxed max-w-xs">
-                See all <strong className="text-white">{SITE_INFO.googleReviewCount} verified Google reviews</strong>{" "}
+                See all <strong>{SITE_INFO.googleReviewCount} verified Google reviews</strong>{" "}
                 from anglers and families who fished Lafitte with Captain Jason.
               </p>
             </div>

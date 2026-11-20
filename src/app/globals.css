@@ -313,3 +313,11 @@ html {
     display: none;
   }
 }
+
+/* Paragraph copy: never bold inline text (strong/b inherit the paragraph weight) */
+strong,
+b {
+  font-weight: inherit !important;
+  color: inherit !important;
+}
+

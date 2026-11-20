@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Phone, CalendarCheck } from "lucide-react";
+import { Phone, CalendarCheck } from "@phosphor-icons/react/dist/ssr";
 import Navbar from "@/components/Navbar";
 import FloatingBayouIcons from "@/components/FloatingBayouIcons";
 import HeroSection from "@/components/HeroSection";

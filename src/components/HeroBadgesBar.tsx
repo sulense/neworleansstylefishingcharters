@@ -2,30 +2,29 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { Clock, Users, Anchor, ShieldCheck } from "lucide-react";
 
 // Exact 4 Quick Highlights from Section 2 of the Homepage Brief
 const TRUST_HIGHLIGHTS = [
   {
-    icon: Clock,
+    icon: "/images/art/trust/5hour-charters.png",
     title: "5-Hour Charters",
     subtitle: "Time on the water",
     href: "/charter-info",
   },
   {
-    icon: Users,
+    icon: "/images/art/trust/private-trips.png",
     title: "Private Fishing Trips",
     subtitle: "Up to 4 anglers per boat",
     href: "/charter-info",
   },
   {
-    icon: Anchor,
+    icon: "/images/art/trust/all-gear.png",
     title: "All Gear Provided",
     subtitle: "Rods, bait & tackle",
     href: "/charter-info",
   },
   {
-    icon: ShieldCheck,
+    icon: "/images/art/trust/local-captains.png",
     title: "Experienced Local Captains",
     subtitle: "Coast Guard licensed",
     href: "/charter-info",
@@ -41,7 +40,6 @@ export default function HeroBadgesBar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-2">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 divide-y sm:divide-y-0 lg:divide-x divide-[#849481]/25 sm:gap-x-6 lg:gap-x-0">
           {TRUST_HIGHLIGHTS.map((item, idx) => {
-            const Icon = item.icon;
             return (
               <motion.div
                 key={item.title}
@@ -56,16 +54,22 @@ export default function HeroBadgesBar() {
               >
                 <Link
                   href={item.href}
-                  className="group flex items-center gap-3.5 py-4 sm:py-5 lg:px-6 first:lg:pl-0 last:lg:pr-0 transition-colors"
+                  className="group flex items-center lg:justify-center gap-4 py-5 sm:py-6 lg:px-7 xl:px-9 transition-colors"
                 >
-                  <div className="w-11 h-11 rounded-full bg-[#203F39] text-[#E5A780] flex items-center justify-center shrink-0 transition-all duration-200 group-hover:bg-[#BF754C] group-hover:text-white">
-                    <Icon className="w-5 h-5" />
-                  </div>
+                  <img
+                    src={item.icon}
+                    alt=""
+                    aria-hidden="true"
+                    width={60}
+                    height={60}
+                    loading="lazy"
+                    className="w-[60px] h-[60px] rounded-full shrink-0 shadow-[0_6px_14px_-6px_rgba(21,43,39,0.45)] transition-transform duration-300 group-hover:scale-105 group-hover:-rotate-3"
+                  />
                   <div className="min-w-0">
-                    <p className="font-display font-bold text-sm sm:text-[15px] text-[#203F39] group-hover:text-[#BF754C] transition-colors leading-snug">
+                    <p className="font-display font-bold text-[15px] sm:text-[17px] text-[#203F39] group-hover:text-[#BF754C] transition-colors leading-snug">
                       {item.title}
                     </p>
-                    <p className="mt-0.5 text-xs text-[#556360] font-medium">
+                    <p className="mt-1 text-[13px] text-[#556360]">
                       {item.subtitle}
                     </p>
                   </div>

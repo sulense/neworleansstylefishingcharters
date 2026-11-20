@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { ArrowRight, BookOpen, Calendar } from "lucide-react";
+import { ArrowRight, BookOpen, Calendar } from "@phosphor-icons/react/dist/ssr";
 import { BLOG_POSTS, SITE_INFO } from "@/data/charterData";
 import {
   BayouStampWatermark,
@@ -100,13 +100,13 @@ export function CaptainSection() {
 
             <div className="mt-5 space-y-4 text-[#3D4A47] text-[15px] sm:text-base leading-relaxed">
               <p>
-                I&apos;m <strong className="text-[#203F39] font-semibold">Captain Jason Shilling</strong>,
+                I&apos;m <strong>Captain Jason Shilling</strong>,
                 lifelong Lafitte local and owner of New Orleans Style Fishing Charters. Just 20
                 miles south of New Orleans, our shallow backwater marshes, bays, and bayous hold
                 hard-fighting redfish, speckled trout, black drum, sheepshead, and flounder year-round.
               </p>
               <p>
-                Every trip is a <strong className="text-[#203F39] font-semibold">private 5-hour charter</strong>{" "}
+                Every trip is a <strong>private 5-hour charter</strong>{" "}
                 out of Joe&apos;s Landing aboard a 22 ft custom bay boat (225hp Mercury Pro XS, up
                 to 4 anglers—with multi-boat trips available for larger groups). Whether you&apos;ve
                 fished your whole life or it&apos;s your family&apos;s very first cast, we tailor
@@ -120,14 +120,14 @@ export function CaptainSection() {
             <div className="mt-7 flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center gap-3.5">
               <Link
                 href="/charter-info"
-                className="btn-copper w-full sm:w-auto inline-flex items-center justify-center text-white px-6 py-3.5 rounded-lg text-sm font-bold uppercase tracking-wider"
+                className="btn-copper w-full sm:w-auto inline-flex items-center justify-center text-white px-6 py-4 rounded-lg text-[15px] font-extrabold uppercase tracking-wider"
               >
                 More About Our Charters
               </Link>
 
               <Link
                 href="/lodging"
-                className="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3.5 rounded-lg bg-[#F6F1E7] hover:bg-[#203F39] text-[#203F39] hover:text-[#F6F1E7] border border-[#849481]/45 hover:border-[#203F39] text-sm font-bold uppercase tracking-wider transition-all duration-200"
+                className="w-full sm:w-auto inline-flex items-center justify-center px-6 py-4 rounded-lg bg-[#F6F1E7] hover:bg-[#203F39] text-[#203F39] hover:text-[#F6F1E7] border-2 border-[#849481]/45 hover:border-[#203F39] text-[15px] font-extrabold uppercase tracking-wider transition-all duration-200"
               >
                 Guest House Lodging
               </Link>
@@ -190,7 +190,7 @@ export function BlogSection() {
 
           <Link
             href="/blog"
-            className="btn-copper w-full sm:w-auto justify-center inline-flex items-center gap-2 self-start md:self-auto px-5 py-3 rounded-lg text-white text-xs sm:text-sm font-bold uppercase tracking-wider group shrink-0"
+            className="btn-copper w-full sm:w-auto justify-center inline-flex items-center gap-2 self-start md:self-auto px-5 py-3.5 rounded-lg text-white text-sm sm:text-[15px] font-extrabold uppercase tracking-wider group shrink-0"
           >
             Read All Blog Posts
             <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />

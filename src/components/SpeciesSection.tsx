@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { Maximize2, X, ArrowRight } from "lucide-react";
+import { ArrowsOut as Maximize2, X, ArrowRight } from "@phosphor-icons/react/dist/ssr";
 import {
   CoastalWaveDivider,
   CompassRoseWatermark,
@@ -177,7 +177,7 @@ export default function SpeciesSection() {
         <div className="mt-10 flex items-center justify-center">
           <Link
             href="/gallery"
-            className="btn-copper w-full sm:w-auto inline-flex items-center justify-center gap-2 text-white px-7 py-3.5 rounded-xl text-xs sm:text-sm font-bold uppercase tracking-wider group"
+            className="btn-copper w-full sm:w-auto inline-flex items-center justify-center gap-2 text-white px-7 py-4 rounded-xl text-sm sm:text-[15px] font-extrabold uppercase tracking-wider group"
           >
             View Our Fishing Gallery
             <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />

@@ -4,16 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import {
-  Phone,
-  ShieldCheck,
-  MapPin,
-  Menu,
-  X,
-  Instagram,
-  Facebook,
-  Youtube,
-} from "lucide-react";
+import { Phone, ShieldCheck, MapPin, List as Menu, X, InstagramLogo as Instagram, FacebookLogo as Facebook, YoutubeLogo as Youtube, XLogo } from "@phosphor-icons/react/dist/ssr";
 import { NAV_ITEMS, SITE_INFO } from "@/data/charterData";
 
 export default function Navbar() {
@@ -35,14 +26,14 @@ export default function Navbar() {
           scrolled ? "h-0 opacity-0 overflow-hidden border-b-0" : "h-10 opacity-100"
         }`}
       >
-        <div className="max-w-7xl mx-auto h-full px-4 sm:px-6 lg:px-8 flex items-center justify-between text-xs sm:text-[13px]">
+        <div className="max-w-7xl mx-auto h-full px-4 sm:px-6 lg:px-8 flex items-center justify-between text-[11px] sm:text-xs tracking-[0.01em]">
           <div className="flex items-center gap-4 text-[#F6F1E7]/90">
-            <span className="inline-flex items-center gap-1.5 font-semibold">
-              <ShieldCheck className="w-3.5 h-3.5 text-[#D8946D]" />
+            <span className="inline-flex items-center gap-2 font-bold">
+              <ShieldCheck weight="fill" className="w-[18px] h-[18px] shrink-0 text-[#D8946D]" />
               USCG Licensed Captains · Est. {SITE_INFO.establishedYear}
             </span>
-            <span className="hidden md:inline-flex items-center gap-1.5 text-[#F6F1E7]/75">
-              <MapPin className="w-3.5 h-3.5 text-[#D8946D]" />
+            <span className="hidden md:inline-flex items-center gap-2 font-semibold text-[#F6F1E7]/85">
+              <MapPin weight="fill" className="w-[18px] h-[18px] shrink-0 text-[#D8946D]" />
               Joe&apos;s Landing · Lafitte, LA (20 Miles South of NOLA)
             </span>
           </div>
@@ -50,47 +41,47 @@ export default function Navbar() {
           <div className="flex items-center gap-4">
             <a
               href={SITE_INFO.phoneHref}
-              className="inline-flex items-center gap-1.5 font-bold text-[#E6B18E] hover:text-white transition-colors"
+              className="inline-flex items-center gap-2 font-extrabold text-[#E6B18E] hover:text-white transition-colors"
             >
-              <Phone className="w-3.5 h-3.5 text-[#BF754C]" />
+              <Phone weight="fill" className="w-[18px] h-[18px] shrink-0 text-[#D8946D]" />
               {SITE_INFO.phone}
             </a>
-            <div className="hidden sm:flex items-center gap-2.5 pl-3 border-l border-[#849481]/30">
+            <div className="hidden sm:flex items-center gap-4 pl-4 border-l border-[#849481]/30">
               <a
                 href={SITE_INFO.facebookUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Follow on Facebook"
-                className="text-[#F6F1E7]/75 hover:text-[#D8946D] transition-colors"
+                className="text-[#F6F1E7] hover:text-[#D8946D] transition-colors"
               >
-                <Facebook className="w-3.5 h-3.5" />
+                <Facebook weight="fill" className="w-[18px] h-[18px] shrink-0" />
               </a>
               <a
                 href={SITE_INFO.instagramUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Follow on Instagram"
-                className="text-[#F6F1E7]/75 hover:text-[#D8946D] transition-colors"
+                className="text-[#F6F1E7] hover:text-[#D8946D] transition-colors"
               >
-                <Instagram className="w-3.5 h-3.5" />
+                <Instagram weight="fill" className="w-[18px] h-[18px] shrink-0" />
               </a>
               <a
                 href={SITE_INFO.twitterUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Follow on X"
-                className="text-[#F6F1E7]/75 hover:text-[#D8946D] transition-colors text-[11px] font-bold leading-none"
+                className="text-[#F6F1E7] hover:text-[#D8946D] transition-colors"
               >
-                𝕏
+                <XLogo weight="fill" className="w-[18px] h-[18px] shrink-0" />
               </a>
               <a
                 href={SITE_INFO.youtubeUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Watch on YouTube"
-                className="text-[#F6F1E7]/75 hover:text-[#D8946D] transition-colors"
+                className="text-[#F6F1E7] hover:text-[#D8946D] transition-colors"
               >
-                <Youtube className="w-3.5 h-3.5" />
+                <Youtube weight="fill" className="w-[18px] h-[18px] shrink-0" />
               </a>
             </div>
           </div>
@@ -122,7 +113,7 @@ export default function Navbar() {
           </Link>
 
           {/* Desktop Navigation Links — Exact 8 Items */}
-          <nav className="hidden xl:flex items-center gap-5" aria-label="Primary Navigation">
+          <nav className="hidden xl:flex items-center gap-5 2xl:gap-7" aria-label="Primary Navigation">
             {NAV_ITEMS.map((item) => {
               const isActive = pathname === item.href;
               return item.external ? (
@@ -131,23 +122,23 @@ export default function Navbar() {
                   href={item.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="relative py-1 text-[13px] font-semibold uppercase tracking-wider text-[#26302E] hover:text-[#BF754C] transition-colors group"
+                  className="relative py-1.5 text-[14px] 2xl:text-[15px] font-bold uppercase tracking-wider text-[#26302E] hover:text-[#BF754C] transition-colors group"
                 >
                   {item.label}
-                  <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-[#BF754C] transition-all duration-300 group-hover:w-full" />
+                  <span className="absolute bottom-0 left-0 w-0 h-[3px] rounded-full bg-[#BF754C] transition-all duration-300 group-hover:w-full" />
                 </a>
               ) : (
                 <Link
                   key={item.label}
                   href={item.href}
                   aria-current={isActive ? "page" : undefined}
-                  className={`relative py-1 text-[13px] font-semibold uppercase tracking-wider transition-colors group ${
+                  className={`relative py-1.5 text-[14px] 2xl:text-[15px] font-bold uppercase tracking-wider transition-colors group ${
                     isActive ? "text-[#BF754C]" : "text-[#26302E] hover:text-[#BF754C]"
                   }`}
                 >
                   {item.label}
                   <span
-                    className={`absolute bottom-0 left-0 h-[2px] bg-[#BF754C] transition-all duration-300 ${
+                    className={`absolute bottom-0 left-0 h-[3px] rounded-full bg-[#BF754C] transition-all duration-300 ${
                       isActive ? "w-full" : "w-0 group-hover:w-full"
                     }`}
                   />
@@ -160,7 +151,7 @@ export default function Navbar() {
           <div className="flex items-center gap-2.5">
             <Link
               href="/contact"
-              className="btn-copper hidden sm:inline-flex items-center gap-2 px-4 py-2.5 rounded-lg text-white text-xs font-bold uppercase tracking-wider shrink-0"
+              className="btn-copper hidden sm:inline-flex items-center gap-2 px-5 py-3.5 rounded-lg text-white text-[13px] font-extrabold uppercase tracking-wider shrink-0"
             >
               Book Your Charter
             </Link>
@@ -198,7 +189,7 @@ export default function Navbar() {
                     target="_blank"
                     rel="noopener noreferrer"
                     onClick={() => setMobileOpen(false)}
-                    className="block px-3 py-2.5 rounded-lg text-sm font-semibold text-[#26302E] hover:bg-[#203F39] hover:text-[#F6F1E7] transition-colors"
+                    className="block px-3 py-3 rounded-lg text-base font-bold text-[#26302E] hover:bg-[#203F39] hover:text-[#F6F1E7] transition-colors"
                   >
                     {item.label}
                   </a>
@@ -208,7 +199,7 @@ export default function Navbar() {
                     href={item.href}
                     aria-current={isActive ? "page" : undefined}
                     onClick={() => setMobileOpen(false)}
-                    className={`block px-3 py-2.5 rounded-lg text-sm font-semibold transition-colors ${
+                    className={`block px-3 py-3 rounded-lg text-base font-bold transition-colors ${
                       isActive
                         ? "bg-[#203F39] text-[#F6F1E7]"
                         : "text-[#26302E] hover:bg-[#203F39] hover:text-[#F6F1E7]"

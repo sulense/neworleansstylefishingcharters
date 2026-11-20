@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight } from "@phosphor-icons/react/dist/ssr";
 import {
   CoastalWaveDivider,
   MarshHorizonSilhouette,
@@ -129,7 +129,7 @@ export default function LodgingAndTransportSection() {
               <div className="mt-6 pt-1">
                 <Link
                   href="/lodging"
-                  className="btn-copper w-full sm:w-auto inline-flex items-center justify-center gap-2 text-white px-6 py-3.5 rounded-xl text-xs sm:text-sm font-bold uppercase tracking-wider group/cta"
+                  className="btn-copper w-full sm:w-auto inline-flex items-center justify-center gap-2 text-white px-6 py-4 rounded-xl text-sm sm:text-[15px] font-extrabold uppercase tracking-wider group/cta"
                 >
                   Explore Lodging
                   <ArrowRight className="w-4 h-4 transition-transform group-hover/cta:translate-x-1" />
@@ -180,7 +180,7 @@ export default function LodgingAndTransportSection() {
               <div className="mt-6 pt-1">
                 <Link
                   href="/location"
-                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-[#203F39] hover:bg-[#BF754C] text-[#F6F1E7] px-6 py-3.5 rounded-xl text-xs sm:text-sm font-bold uppercase tracking-wider transition-colors group/cta"
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-[#203F39] hover:bg-[#BF754C] text-[#F6F1E7] px-6 py-4 rounded-xl text-sm sm:text-[15px] font-extrabold uppercase tracking-wider transition-colors group/cta"
                 >
                   Transportation &amp; Directions
                   <ArrowRight className="w-4 h-4 transition-transform group-hover/cta:translate-x-1" />

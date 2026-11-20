@@ -441,77 +441,41 @@ export function YelpLogo({
   );
 }
 
-/* Official-style split pill badge for FishingBooker (matches horizontal accreditation badge rhythm) */
-export function FishingBookerHeroBadge({
-  rating = "4.8",
-  count = "70+",
-}: {
+/* ------------------------------------------------------------------
+ * Hero review badges — official brand logos (public/images/logos)
+ * FishingBooker: official white logo on brand blue #2185C5
+ * Tripadvisor: official horizontal lockup on white
+ * Yelp: official wordmark + burst on white
+ * ------------------------------------------------------------------ */
+type HeroBadgeProps = {
   rating?: string;
+  /** Kept for API compatibility; review counts are intentionally not displayed. */
   count?: string;
-}) {
+};
+
+const badgeShell =
+  "inline-flex items-center justify-center h-[52px] px-4 rounded-xl shadow-[0_6px_16px_rgba(0,0,0,0.35)] select-none";
+
+export function FishingBookerHeroBadge(_props: HeroBadgeProps) {
   return (
-    <span className="inline-flex items-stretch h-[50px] rounded-lg overflow-hidden shadow-[0_6px_16px_rgba(0,0,0,0.35)] border border-white/25 select-none">
-      <span className="bg-white px-2.5 flex items-center gap-1.5">
-        <FishingBookerPinIcon className="w-6 h-6" />
-        <span className="flex flex-col leading-none text-left">
-          <span className="font-sans font-extrabold text-[11px] tracking-tight text-[#203F39]">
-            Fishing
-          </span>
-          <span className="font-sans font-extrabold text-[11px] tracking-tight text-[#00897B]">
-            Booker
-          </span>
-        </span>
-      </span>
-      <span className="bg-[#00796B] px-2.5 flex flex-col items-center justify-center text-white leading-tight">
-        <span className="font-sans font-extrabold text-[13px] tracking-tight">
-          {rating} <span className="text-[#FFD54F]">★</span>
-        </span>
-        <span className="text-[9px] font-semibold uppercase tracking-wider text-white/90">
-          {count} Rev
-        </span>
-      </span>
+    <span className={`${badgeShell} bg-[#2185C5] border border-white/25`}>
+      <img src="/images/logos/fishingbooker.svg" alt="FishingBooker" className="h-[30px] w-auto" />
     </span>
   );
 }
 
-/* Official Tripadvisor circular brand seal (official #34E0A1 Tripadvisor green + black Ollie Owl) */
-export function TripAdvisorHeroBadge({
-  rating = "5.0",
-  count = "126",
-}: {
-  rating?: string;
-  count?: string;
-}) {
+export function TripAdvisorHeroBadge(_props: HeroBadgeProps) {
   return (
-    <span className="inline-flex flex-col items-center justify-center w-[58px] h-[58px] rounded-full bg-[#34E0A1] border-2 border-white/85 shadow-[0_6px_16px_rgba(0,0,0,0.38)] text-[#002B11] leading-none select-none">
-      <TripAdvisorLogo className="w-7 h-5" fill="#000000" />
-      <span className="mt-0.5 font-sans font-extrabold text-[11px] tracking-tight">
-        {rating}★
-      </span>
-      <span className="text-[8px] font-extrabold uppercase tracking-wider text-[#002B11]/85">
-        {count} Rev
-      </span>
+    <span className={`${badgeShell} bg-white border border-white`}>
+      <img src="/images/logos/tripadvisor-lockup.svg" alt="Tripadvisor" className="h-[22px] w-auto" />
     </span>
   );
 }
 
-/* Official Yelp circular brand seal (official white badge + crimson #FF1A1A Yelp Burst) */
-export function YelpHeroBadge({
-  rating = "5.0",
-  count = "15",
-}: {
-  rating?: string;
-  count?: string;
-}) {
+export function YelpHeroBadge(_props: HeroBadgeProps) {
   return (
-    <span className="inline-flex flex-col items-center justify-center w-[58px] h-[58px] rounded-full bg-white border-2 border-[#D32323] shadow-[0_6px_16px_rgba(0,0,0,0.38)] text-[#2D2E2F] leading-none select-none">
-      <YelpLogo className="w-5 h-5" fill="#FF1A1A" />
-      <span className="mt-0.5 font-sans font-extrabold text-[11px] tracking-tight text-[#D32323]">
-        {rating}★
-      </span>
-      <span className="text-[8px] font-extrabold uppercase tracking-wider text-[#2D2E2F]/80">
-        {count} Rev
-      </span>
+    <span className={`${badgeShell} bg-white border border-white`}>
+      <img src="/images/logos/yelp-wordmark.svg" alt="Yelp" className="h-[30px] w-auto" />
     </span>
   );
 }

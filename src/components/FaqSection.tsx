@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { ArrowRight, ChevronDown } from "lucide-react";
+import { ArrowRight, CaretDown as ChevronDown } from "@phosphor-icons/react/dist/ssr";
 import { FAQS, SITE_INFO, type FaqItem } from "@/data/charterData";
 import {
   BayouStampWatermark,
@@ -157,7 +157,7 @@ export default function FaqSection() {
         <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4 text-center">
           <Link
             href="/faqs"
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg bg-[#203F39] hover:bg-[#BF754C] text-[#F6F1E7] text-xs sm:text-sm font-bold uppercase tracking-wider transition-colors group"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-lg bg-[#203F39] hover:bg-[#BF754C] text-[#F6F1E7] text-sm sm:text-[15px] font-extrabold uppercase tracking-wider transition-colors group"
           >
             View All FAQs
             <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
@@ -167,7 +167,7 @@ export default function FaqSection() {
             Have another question?{" "}
             <a
               href={SITE_INFO.phoneHref}
-              className="font-bold text-[#203F39] hover:text-[#BF754C] underline underline-offset-4 transition-colors"
+              className="text-[#203F39] hover:text-[#BF754C] underline underline-offset-4 transition-colors"
             >
               Call Capt. Jason at {SITE_INFO.phone}
             </a>

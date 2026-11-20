@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { MapPin, Navigation, ExternalLink } from "lucide-react";
+import { MapPin, NavigationArrow as Navigation, ArrowSquareOut as ExternalLink } from "@phosphor-icons/react/dist/ssr";
 import { SITE_INFO } from "@/data/charterData";
 import {
   BayouStampWatermark,
@@ -44,10 +44,10 @@ export default function LocationSection() {
 
             <p className="mt-4 max-w-xl text-sm sm:text-base text-[#495754] leading-relaxed">
               Just south of New Orleans, the city opens into the calm inshore waters of the{" "}
-              <strong className="text-[#203F39] font-semibold">Lafitte and Barataria area</strong>
+              <strong>Lafitte and Barataria area</strong>
               —winding bayous, shallow marshes, and quiet bays teeming with South Louisiana
               wildlife. All charters depart from{" "}
-              <strong className="text-[#203F39] font-semibold">Joe&apos;s Landing</strong>.
+              <strong>Joe&apos;s Landing</strong>.
             </p>
 
             {/* Primary Get Directions CTA */}
@@ -56,7 +56,7 @@ export default function LocationSection() {
                 href={SITE_INFO.mapsUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn-copper w-full sm:w-auto inline-flex items-center justify-center gap-2 text-white px-7 py-3.5 rounded-xl text-xs sm:text-sm font-bold uppercase tracking-wider"
+                className="btn-copper w-full sm:w-auto inline-flex items-center justify-center gap-2 text-white px-7 py-4 rounded-xl text-sm sm:text-[15px] font-extrabold uppercase tracking-wider"
               >
                 <Navigation className="w-4 h-4" />
                 Get Directions

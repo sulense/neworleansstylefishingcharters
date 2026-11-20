@@ -3,25 +3,7 @@
 import { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import {
-  MapPin,
-  Phone,
-  Mail,
-  Send,
-  CheckCircle2,
-  ExternalLink,
-  Instagram,
-  Facebook,
-  Youtube,
-  Car,
-  CalendarDays,
-  ChevronLeft,
-  ChevronRight,
-  Minus,
-  Plus,
-  ShieldCheck,
-  X,
-} from "lucide-react";
+import { MapPin, Phone, Envelope as Mail, PaperPlaneTilt as Send, CheckCircle as CheckCircle2, ArrowSquareOut as ExternalLink, InstagramLogo as Instagram, FacebookLogo as Facebook, YoutubeLogo as Youtube, Car, CalendarDots as CalendarDays, CaretLeft as ChevronLeft, CaretRight as ChevronRight, Minus, Plus, ShieldCheck, X } from "@phosphor-icons/react/dist/ssr";
 import { NAV_ITEMS, SITE_INFO } from "@/data/charterData";
 import AnimatedFishingRopeDivider from "@/components/AnimatedFishingRopeDivider";
 import {
@@ -337,7 +319,7 @@ export default function BookingAndFooter({ selectedTier }: BookingAndFooterProps
                     Prefer to talk? Call Captain Jason at{" "}
                     <a
                       href={SITE_INFO.phoneHref}
-                      className="font-bold text-[#203F39] hover:text-[#BF754C] underline underline-offset-4 transition-colors"
+                      className="text-[#203F39] hover:text-[#BF754C] underline underline-offset-4 transition-colors"
                     >
                       {SITE_INFO.phone}
                     </a>
@@ -347,7 +329,7 @@ export default function BookingAndFooter({ selectedTier }: BookingAndFooterProps
                   <button
                     type="button"
                     onClick={() => setSubmitted(false)}
-                    className="mt-6 px-6 py-3 rounded-xl bg-[#203F39] hover:bg-[#BF754C] text-[#F6F1E7] text-xs sm:text-sm font-bold uppercase tracking-wider transition-colors cursor-pointer"
+                    className="mt-6 px-6 py-3.5 rounded-xl bg-[#203F39] hover:bg-[#BF754C] text-[#F6F1E7] text-sm sm:text-[15px] font-extrabold uppercase tracking-wider transition-colors cursor-pointer"
                   >
                     Request Another Date
                   </button>
@@ -539,7 +521,7 @@ export default function BookingAndFooter({ selectedTier }: BookingAndFooterProps
                     <p className="flex items-start gap-2 text-xs text-[#495754] leading-relaxed">
                       <ShieldCheck className="w-4 h-4 text-[#BF754C] shrink-0 mt-0.5" />
                       <span>
-                        <strong className="text-[#203F39]">Availability inquiry only:</strong> Not
+                        <strong>Availability inquiry only:</strong> Not
                         an instant booking. Captain Jason will reach out personally to confirm your
                         date.
                       </span>
@@ -725,7 +707,7 @@ export default function BookingAndFooter({ selectedTier }: BookingAndFooterProps
                       Prefer to talk? Call Captain Jason at{" "}
                       <a
                         href={SITE_INFO.phoneHref}
-                        className="font-bold text-[#203F39] hover:text-[#BF754C] underline underline-offset-4 transition-colors"
+                        className="text-[#203F39] hover:text-[#BF754C] underline underline-offset-4 transition-colors"
                       >
                         {SITE_INFO.phone}
                       </a>
@@ -898,7 +880,7 @@ export default function BookingAndFooter({ selectedTier }: BookingAndFooterProps
                 href={SITE_INFO.licenseUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 mt-1 px-4 py-2.5 rounded-lg bg-[#F6F1E7]/10 hover:bg-[#BF754C] border border-[#849481]/40 text-xs font-bold uppercase tracking-wider text-[#F6F1E7] transition-colors"
+                className="inline-flex items-center gap-2 mt-1 px-4 py-3 rounded-lg bg-[#F6F1E7]/10 hover:bg-[#BF754C] border-2 border-[#849481]/40 text-[13px] font-extrabold uppercase tracking-wider text-[#F6F1E7] transition-colors"
               >
                 Purchase $20 LA Fishing License
                 <ExternalLink className="w-3.5 h-3.5" />

@@ -2,23 +2,7 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import {
-  Ship,
-  Fuel,
-  Fish,
-  Droplets,
-  CloudSun,
-  FileCheck2,
-  Sun,
-  Coffee,
-  Snowflake,
-  Check,
-  ExternalLink,
-  Anchor,
-  Utensils,
-  Package,
-  Car,
-} from "lucide-react";
+import { Boat as Ship, GasPump as Fuel, Fish, Drop as Droplets, CloudSun, FileText as FileCheck2, Sun, Coffee, Snowflake, Check, ArrowSquareOut as ExternalLink, Anchor, ForkKnife as Utensils, Package, Car } from "@phosphor-icons/react/dist/ssr";
 import { FEES_INCLUDE, SITE_INFO, WHAT_TO_BRING, type ChecklistItem } from "@/data/charterData";
 import {
   CoastalWaveDivider,
@@ -329,7 +313,7 @@ export default function TripChecklistSection() {
             </div>
             <p className="mt-1.5 text-xs text-[#575044] leading-relaxed">
               Freeze, package &amp; ship anywhere in the U.S. with{" "}
-              <strong className="text-[#12115d]">{SITE_INFO.shippingPartner.name}</strong> (
+              <strong>{SITE_INFO.shippingPartner.name}</strong> (
               {SITE_INFO.shippingPartner.contact}):
             </p>
             <a
@@ -348,7 +332,7 @@ export default function TripChecklistSection() {
             </div>
             <p className="mt-1.5 text-xs text-[#575044] leading-relaxed">
               Uber/Lyft are out of range for return pickups from Lafitte. Book round-trip rides with{" "}
-              <strong className="text-[#12115d]">{SITE_INFO.transportPartner.contact}</strong> at{" "}
+              <strong>{SITE_INFO.transportPartner.contact}</strong> at{" "}
               {SITE_INFO.transportPartner.name}:
             </p>
             <a

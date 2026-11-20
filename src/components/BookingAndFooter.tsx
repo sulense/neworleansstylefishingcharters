@@ -224,12 +224,12 @@ export default function BookingAndFooter({ selectedTier }: BookingAndFooterProps
         {/* Full-Width Dramatic South Louisiana Marshland Backdrop */}
         <div className="absolute inset-0">
           <img
-            src="/images/art/hero-cypress-bayou.jpg"
-            alt="Golden sunrise light over calm South Louisiana bayou marshlands"
+            src="/images/art/hero-lafitte-open-marsh.jpg"
+            alt="Open calm water and marshland under a big South Louisiana sky near Lafitte"
             loading="lazy"
             className="w-full h-full object-cover object-center"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-[#132622]/82 via-[#19332E]/72 to-[#132622]/90" />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#132622]/78 via-[#19332E]/62 to-[#132622]/86" />
         </div>
 
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">

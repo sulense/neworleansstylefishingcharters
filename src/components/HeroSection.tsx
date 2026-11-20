@@ -5,6 +5,7 @@ import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
 import { ArrowRight, PaperPlaneTilt as Send, CheckCircle as CheckCircle2, Star, CaretDown as ChevronDown } from "@phosphor-icons/react/dist/ssr";
 import { SITE_INFO } from "@/data/charterData";
+import { formatPhoneInput, PHONE_PATTERN, PHONE_TITLE } from "@/lib/phone";
 import {
   FishingBookerHeroBadge,
   GoogleGLogo,
@@ -266,7 +267,7 @@ export default function HeroSection() {
                 />
 
                 {/* Right Clickable Official Review Emblems: FishingBooker + TripAdvisor + Yelp */}
-                <div className="flex items-center gap-2.5 shrink-0">
+                <div className="flex flex-wrap items-center gap-2 sm:gap-2.5 lg:flex-nowrap lg:shrink-0">
                   <a
                     href={SITE_INFO.fishingBookerUrl}
                     target="_blank"
@@ -433,9 +434,14 @@ export default function HeroSection() {
                         <input
                           id="hero-phone"
                           type="tel"
+                          inputMode="tel"
+                          autoComplete="tel"
                           required
+                          pattern={PHONE_PATTERN}
+                          title={PHONE_TITLE}
+                          maxLength={16}
                           value={phone}
-                          onChange={(e) => setPhone(e.target.value)}
+                          onChange={(e) => setPhone(formatPhoneInput(e.target.value))}
                           placeholder="(504) 555-0192"
                           className="w-full px-3.5 py-2.5 rounded-lg bg-white border border-[#849481]/45 focus:border-[#BF754C] focus:ring-2 focus:ring-[#BF754C]/20 focus:outline-none text-sm text-[#26302E] transition-all"
                         />

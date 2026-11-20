@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Libre_Baskerville, Open_Sans } from "next/font/google";
 import "./globals.css";
+import { SITE_URL } from "@/data/site";
 
 const libreBaskerville = Libre_Baskerville({
   subsets: ["latin"],
@@ -18,6 +19,7 @@ const openSans = Open_Sans({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title:
     "New Orleans Style Fishing Charters | Private Lafitte & Barataria Inshore Fishing",
   description:
@@ -32,8 +34,16 @@ export const metadata: Metadata = {
     locale: "en_US",
     type: "website",
   },
+  twitter: {
+    card: "summary_large_image",
+    site: "@Nawlins_style",
+    title:
+      "New Orleans Style Fishing Charters | Private Lafitte & Barataria Inshore Fishing",
+    description:
+      "Private 5-hour Louisiana inshore fishing charters through the bayous and marshes of Lafitte with Captain Jason Shilling.",
+  },
   alternates: {
-    canonical: "https://www.neworleansstylefishingcharters.com/",
+    canonical: "/",
   },
 };
 

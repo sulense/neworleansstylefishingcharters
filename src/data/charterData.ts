@@ -139,7 +139,7 @@ export const SITE_INFO = {
   charterInfoUrl: "https://www.neworleansstylefishingcharters.com/louisiana-fishing-trips-charter-info/",
   lodgingUrl: "https://www.neworleansstylefishingcharters.com/lodging/",
   amenitiesUrl: "https://www.neworleansstylefishingcharters.com/amenities/",
-  privacyUrl: "https://www.neworleansstylefishingcharters.com/privacy-policy-2/",
+  privacyUrl: "/privacy-policy",
   licenseUrl: "https://www.wlf.louisiana.gov/page/recreational-fishing-licenses-and-permits",
   ldwfRegsUrl: "https://www.eregulations.com/louisiana/fishing",
   transportPartner: {

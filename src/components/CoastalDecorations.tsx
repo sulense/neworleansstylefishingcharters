@@ -454,12 +454,12 @@ type HeroBadgeProps = {
 };
 
 const badgeShell =
-  "inline-flex items-center justify-center h-[52px] px-4 rounded-xl shadow-[0_6px_16px_rgba(0,0,0,0.35)] select-none";
+  "inline-flex items-center justify-center h-[44px] px-3 sm:h-[52px] sm:px-4 rounded-xl shadow-[0_6px_16px_rgba(0,0,0,0.35)] select-none";
 
 export function FishingBookerHeroBadge(_props: HeroBadgeProps) {
   return (
     <span className={`${badgeShell} bg-[#2185C5] border border-white/25`}>
-      <img src="/images/logos/fishingbooker.svg" alt="FishingBooker" className="h-[30px] w-auto" />
+      <img src="/images/logos/fishingbooker.svg" alt="FishingBooker" className="h-6 sm:h-[30px] w-auto" />
     </span>
   );
 }
@@ -467,7 +467,7 @@ export function FishingBookerHeroBadge(_props: HeroBadgeProps) {
 export function TripAdvisorHeroBadge(_props: HeroBadgeProps) {
   return (
     <span className={`${badgeShell} bg-white border border-white`}>
-      <img src="/images/logos/tripadvisor-lockup.svg" alt="Tripadvisor" className="h-[22px] w-auto" />
+      <img src="/images/logos/tripadvisor-lockup.svg" alt="Tripadvisor" className="h-[18px] sm:h-[22px] w-auto" />
     </span>
   );
 }
@@ -475,7 +475,7 @@ export function TripAdvisorHeroBadge(_props: HeroBadgeProps) {
 export function YelpHeroBadge(_props: HeroBadgeProps) {
   return (
     <span className={`${badgeShell} bg-white border border-white`}>
-      <img src="/images/logos/yelp-wordmark.svg" alt="Yelp" className="h-[30px] w-auto" />
+      <img src="/images/logos/yelp-wordmark.svg" alt="Yelp" className="h-6 sm:h-[30px] w-auto" />
     </span>
   );
 }

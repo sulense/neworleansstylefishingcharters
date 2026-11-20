@@ -5,6 +5,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { MapPin, Phone, Envelope as Mail, PaperPlaneTilt as Send, CheckCircle as CheckCircle2, ArrowSquareOut as ExternalLink, InstagramLogo as Instagram, FacebookLogo as Facebook, YoutubeLogo as Youtube, Car, CalendarDots as CalendarDays, CaretLeft as ChevronLeft, CaretRight as ChevronRight, Minus, Plus, ShieldCheck, X } from "@phosphor-icons/react/dist/ssr";
 import { NAV_ITEMS, SITE_INFO } from "@/data/charterData";
+import { formatPhoneInput, PHONE_PATTERN, PHONE_TITLE } from "@/lib/phone";
 import AnimatedFishingRopeDivider from "@/components/AnimatedFishingRopeDivider";
 import {
   CompassRoseWatermark,
@@ -665,9 +666,14 @@ export default function BookingAndFooter({ selectedTier }: BookingAndFooterProps
                         <input
                           id="booking-phone"
                           type="tel"
+                          inputMode="tel"
+                          autoComplete="tel"
                           required
+                          pattern={PHONE_PATTERN}
+                          title={PHONE_TITLE}
+                          maxLength={16}
                           value={phone}
-                          onChange={(e) => setPhone(e.target.value)}
+                          onChange={(e) => setPhone(formatPhoneInput(e.target.value))}
                           placeholder="(504) 555-0192"
                           className="w-full px-3.5 py-2.5 rounded-lg bg-white border border-[#849481]/40 focus:border-[#BF754C] focus:ring-2 focus:ring-[#BF754C]/20 focus:outline-none text-sm text-[#26302E] transition-colors"
                         />
@@ -864,14 +870,13 @@ export default function BookingAndFooter({ selectedTier }: BookingAndFooterProps
                 <li className="flex items-center gap-2.5">
                   <Car className="w-4 h-4 text-[#BF754C] shrink-0" />
                   <span>
-                    NOLA Ride: {SITE_INFO.transportPartner.contact} (
+                    NOLA Ride: {SITE_INFO.transportPartner.contact} ·{" "}
                     <a
                       href={SITE_INFO.transportPartner.phoneHref}
-                      className="hover:text-[#E5A780] font-semibold"
+                      className="hover:text-[#E5A780] transition-colors"
                     >
                       {SITE_INFO.transportPartner.phone}
                     </a>
-                    )
                   </span>
                 </li>
               </ul>
@@ -894,9 +899,7 @@ export default function BookingAndFooter({ selectedTier }: BookingAndFooterProps
               <p>© 2026 {SITE_INFO.name}. All rights reserved.</p>
               <span className="text-[#F6F1E7]/25">|</span>
               <a
-                href={SITE_INFO.privacyUrl}
-                target="_blank"
-                rel="noopener noreferrer"
+                href="/privacy-policy"
                 className="hover:text-[#F6F1E7] underline underline-offset-2 transition-colors"
               >
                 Privacy Policy

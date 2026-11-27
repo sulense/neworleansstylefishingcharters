@@ -4,7 +4,6 @@ import { useState } from "react";
 import Link from "next/link";
 import { Phone, CalendarCheck } from "@phosphor-icons/react/dist/ssr";
 import Navbar from "@/components/Navbar";
-import FloatingBayouIcons from "@/components/FloatingBayouIcons";
 import HeroSection from "@/components/HeroSection";
 import AnimatedFishingRopeDivider from "@/components/AnimatedFishingRopeDivider";
 import HeroBadgesBar from "@/components/HeroBadgesBar";
@@ -24,7 +23,6 @@ export default function HomePage() {
 
   return (
     <div className="relative min-h-screen flex flex-col">
-      <FloatingBayouIcons />
       <Navbar />
 
       <main className="flex-1">

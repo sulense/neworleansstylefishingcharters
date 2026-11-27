@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
-import { ArrowRight, PaperPlaneTilt as Send, CheckCircle as CheckCircle2, Star, CaretDown as ChevronDown } from "@phosphor-icons/react/dist/ssr";
+import { ArrowRight, PaperPlaneTilt as Send, CheckCircle as CheckCircle2, Star, Minus, Plus } from "@phosphor-icons/react/dist/ssr";
 import { SITE_INFO } from "@/data/charterData";
 import { formatPhoneInput, PHONE_PATTERN, PHONE_TITLE } from "@/lib/phone";
 import {
@@ -13,16 +13,32 @@ import {
   YelpHeroBadge,
 } from "@/components/CoastalDecorations";
 import AnimatedHeroHeading from "@/components/AnimatedHeroHeading";
+import CharterDateField from "@/components/CharterDateField";
 
-const SERVICE_OPTIONS = [
-  "1–2 People Fishing Charter",
-  "3 People Fishing Charter",
-  "4 People Fishing Charter",
-  "5+ Multi-Boat Group Charter",
-  "Charter + Guest House Lodging",
-  "Evening Fishing Charter",
-  "General Question / Availability",
+const ANGLER_TIERS = [
+  { count: 2, label: "1–2 Anglers", rate: "$550" },
+  { count: 3, label: "3 Anglers", rate: "$600" },
+  { count: 4, label: "4 Anglers", rate: "$650" },
+  { count: 5, label: "5+ Anglers", rate: "Multi-Boat" },
 ];
+
+function getAnglerMeta(count: number) {
+  if (count <= 2) return { shortLabel: count === 1 ? "1 Angler" : "1–2 Anglers", subNote: "Private 5-hour charter" };
+  if (count === 3) return { shortLabel: "3 Anglers", subNote: "Private 5-hour charter" };
+  if (count === 4) return { shortLabel: "4 Anglers", subNote: "Private 5-hour charter" };
+  return { shortLabel: "5+ Anglers", subNote: "Multiple boats coordinated" };
+}
+
+function formatDateReadable(iso: string): string {
+  if (!iso) return "";
+  const [y, m, d] = iso.split("-").map(Number);
+  if (!y || !m || !d) return iso;
+  return new Date(y, m - 1, d).toLocaleDateString("en-US", {
+    weekday: "short",
+    month: "short",
+    day: "numeric",
+  });
+}
 
 const HERO_MOBILE_STATIC = "/images/art/hero-lafitte-open-marsh.jpg";
 const HERO_VIDEO_POSTER = "/images/video-clips/hero-video-poster.jpg";
@@ -33,14 +49,14 @@ export default function HeroSection() {
   const [enableVideo, setEnableVideo] = useState(false);
   const [videoReady, setVideoReady] = useState(false);
 
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
+  const [anglerCount, setAnglerCount] = useState(3);
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
-  const [city, setCity] = useState("");
-  const [serviceNeed, setServiceNeed] = useState("");
+  const [preferredDate, setPreferredDate] = useState("");
   const [message, setMessage] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const anglerMeta = getAnglerMeta(anglerCount);
 
   // Enable full-width looping video on desktop screens when reduced-motion and Data Saver are off;
   // mobile, slow connections, and reduced-motion devices receive the crisp static sunrise marsh image.
@@ -125,7 +141,7 @@ export default function HeroSection() {
                 videoReady ? "opacity-100" : "opacity-0"
               }`}
             >
-              <source src="/videos/hero-bayou-hd.mp4" type="video/mp4" />
+              <source src="/videos/hero-bayou-hd.mp4?v=faces" type="video/mp4" />
             </video>
           </>
         )}
@@ -346,9 +362,17 @@ export default function HeroSection() {
                       Availability Request Sent
                     </h3>
                     <p className="mt-2 text-sm text-[#4A5855] max-w-sm mx-auto leading-relaxed">
-                      Thanks{firstName ? `, ${firstName}` : ""}! Captain Jason received your
-                      inquiry for <strong>{serviceNeed}</strong> and
-                      will respond shortly to confirm availability.
+                      Thanks{name ? `, ${name}` : ""}! Captain Jason received your
+                      inquiry for <strong>{anglerMeta.shortLabel}</strong>
+                      {preferredDate ? (
+                        <>
+                          {" "}
+                          on <strong>{formatDateReadable(preferredDate)}</strong>
+                        </>
+                      ) : (
+                        " with flexible dates"
+                      )}{" "}
+                      and will respond shortly to confirm availability.
                     </p>
                     <p className="mt-3 text-xs text-[#5B6B67]">
                       Prefer to call? Reach us at{" "}
@@ -367,45 +391,90 @@ export default function HeroSection() {
                   </motion.div>
                 ) : (
                   <form onSubmit={handleSubmit} className="space-y-3.5">
-                    {/* Row 1: First Name & Last Name */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                      <div>
-                        <label
-                          htmlFor="hero-first-name"
-                          className="block text-[11px] font-bold uppercase tracking-wider text-[#203F39] mb-1"
-                        >
-                          First Name *
-                        </label>
-                        <input
-                          id="hero-first-name"
-                          type="text"
-                          required
-                          value={firstName}
-                          onChange={(e) => setFirstName(e.target.value)}
-                          placeholder="First name"
-                          className="w-full px-3.5 py-2.5 rounded-lg bg-white border border-[#849481]/45 focus:border-[#BF754C] focus:ring-2 focus:ring-[#BF754C]/20 focus:outline-none text-sm text-[#26302E] transition-all"
-                        />
+                    <CharterDateField
+                      id="hero-date"
+                      value={preferredDate}
+                      onChange={setPreferredDate}
+                    />
+
+                    <div className="rounded-xl bg-white/80 border border-[#849481]/30 p-3">
+                      <div className="flex items-center justify-between gap-3">
+                        <div>
+                          <span className="block text-[11px] font-bold uppercase tracking-wider text-[#203F39]">
+                            Number of Anglers
+                          </span>
+                          <span className="block text-[11px] text-[#5A6864] mt-0.5">
+                            {anglerMeta.subNote}
+                          </span>
+                        </div>
+                        <div className="inline-flex items-center gap-1 bg-[#FAF6EE] rounded-lg border border-[#849481]/40 p-1 shrink-0">
+                          <button
+                            type="button"
+                            onClick={() => setAnglerCount((count) => Math.max(1, count - 1))}
+                            disabled={anglerCount <= 1}
+                            aria-label="Decrease number of anglers"
+                            className="w-7 h-7 rounded-md bg-white flex items-center justify-center text-[#203F39] disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer"
+                          >
+                            <Minus className="w-3.5 h-3.5" />
+                          </button>
+                          <span className="w-8 text-center font-display text-sm font-bold text-[#203F39]">
+                            {anglerCount === 5 ? "5+" : anglerCount}
+                          </span>
+                          <button
+                            type="button"
+                            onClick={() => setAnglerCount((count) => Math.min(5, count + 1))}
+                            disabled={anglerCount >= 5}
+                            aria-label="Increase number of anglers"
+                            className="w-7 h-7 rounded-md bg-white flex items-center justify-center text-[#203F39] disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer"
+                          >
+                            <Plus className="w-3.5 h-3.5" />
+                          </button>
+                        </div>
                       </div>
-                      <div>
-                        <label
-                          htmlFor="hero-last-name"
-                          className="block text-[11px] font-bold uppercase tracking-wider text-[#203F39] mb-1"
-                        >
-                          Last Name *
-                        </label>
-                        <input
-                          id="hero-last-name"
-                          type="text"
-                          required
-                          value={lastName}
-                          onChange={(e) => setLastName(e.target.value)}
-                          placeholder="Last name"
-                          className="w-full px-3.5 py-2.5 rounded-lg bg-white border border-[#849481]/45 focus:border-[#BF754C] focus:ring-2 focus:ring-[#BF754C]/20 focus:outline-none text-sm text-[#26302E] transition-all"
-                        />
+                      <div className="mt-2.5 grid grid-cols-2 gap-1.5">
+                        {ANGLER_TIERS.map((tier) => {
+                          const isActive =
+                            (tier.count === 2 && anglerCount <= 2) || tier.count === anglerCount;
+                          return (
+                            <button
+                              key={tier.label}
+                              type="button"
+                              onClick={() => setAnglerCount(tier.count)}
+                              aria-pressed={isActive}
+                              className={`px-2 py-1.5 rounded-lg border text-center cursor-pointer ${
+                                isActive
+                                  ? "bg-[#203F39] text-[#F6F1E7] border-[#203F39]"
+                                  : "bg-white text-[#203F39] border-[#849481]/35 hover:border-[#BF754C]"
+                              }`}
+                            >
+                              <span className="block text-[11px] font-bold leading-tight">{tier.label}</span>
+                              <span className={`block text-[11px] font-semibold ${isActive ? "text-[#E5A780]" : "text-[#5A6864]"}`}>
+                                {tier.rate}
+                              </span>
+                            </button>
+                          );
+                        })}
                       </div>
                     </div>
 
-                    {/* Row 2: Email & Phone */}
+                    <div>
+                      <label
+                        htmlFor="hero-name"
+                        className="block text-[11px] font-bold uppercase tracking-wider text-[#203F39] mb-1"
+                      >
+                        Name *
+                      </label>
+                      <input
+                        id="hero-name"
+                        type="text"
+                        required
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        placeholder="Your full name"
+                        className="w-full px-3.5 py-2.5 rounded-lg bg-white border border-[#849481]/45 focus:border-[#BF754C] focus:ring-2 focus:ring-[#BF754C]/20 focus:outline-none text-sm text-[#26302E] transition-all"
+                      />
+                    </div>
+
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                       <div>
                         <label
@@ -448,70 +517,19 @@ export default function HeroSection() {
                       </div>
                     </div>
 
-                    {/* Row 3: City & What Do You Need Dropdown */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                      <div>
-                        <label
-                          htmlFor="hero-city"
-                          className="block text-[11px] font-bold uppercase tracking-wider text-[#203F39] mb-1"
-                        >
-                          City
-                        </label>
-                        <input
-                          id="hero-city"
-                          type="text"
-                          value={city}
-                          onChange={(e) => setCity(e.target.value)}
-                          placeholder="e.g. New Orleans, LA"
-                          className="w-full px-3.5 py-2.5 rounded-lg bg-white border border-[#849481]/45 focus:border-[#BF754C] focus:ring-2 focus:ring-[#BF754C]/20 focus:outline-none text-sm text-[#26302E] transition-all"
-                        />
-                      </div>
-
-                      <div>
-                        <label
-                          htmlFor="hero-need"
-                          className="block text-[11px] font-bold uppercase tracking-wider text-[#203F39] mb-1"
-                        >
-                          What Do You Need? *
-                        </label>
-                        <div className="relative">
-                          <select
-                            id="hero-need"
-                            required
-                            value={serviceNeed}
-                            onChange={(e) => setServiceNeed(e.target.value)}
-                            className={`w-full appearance-none pl-3.5 pr-9 py-2.5 rounded-lg bg-white border border-[#849481]/45 focus:border-[#BF754C] focus:ring-2 focus:ring-[#BF754C]/20 focus:outline-none text-sm font-medium transition-all cursor-pointer ${
-                              serviceNeed ? "text-[#26302E]" : "text-[#7A8783]"
-                            }`}
-                          >
-                            <option value="" disabled>
-                              Select a charter...
-                            </option>
-                            {SERVICE_OPTIONS.map((opt) => (
-                              <option key={opt} value={opt} className="text-[#26302E]">
-                                {opt}
-                              </option>
-                            ))}
-                          </select>
-                          <ChevronDown className="pointer-events-none w-4 h-4 text-[#203F39] absolute right-3 top-1/2 -translate-y-1/2" />
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Row 4: Short Message */}
                     <div>
                       <label
                         htmlFor="hero-message"
                         className="block text-[11px] font-bold uppercase tracking-wider text-[#203F39] mb-1"
                       >
-                        Short Message
+                        Message / Questions
                       </label>
                       <textarea
                         id="hero-message"
                         rows={2}
                         value={message}
                         onChange={(e) => setMessage(e.target.value)}
-                        placeholder="Preferred dates, number of anglers, or questions..."
+                        placeholder="Any questions about start times, experience levels, or special requests..."
                         className="w-full px-3.5 py-2.5 rounded-lg bg-white border border-[#849481]/45 focus:border-[#BF754C] focus:ring-2 focus:ring-[#BF754C]/20 focus:outline-none text-sm text-[#26302E] transition-all resize-none"
                       />
                     </div>

@@ -62,6 +62,7 @@ export interface BlogPost {
   image: string;
   imageAlt: string;
   href: string;
+  objectPosition?: string;
 }
 
 export interface ExperienceCard {
@@ -526,6 +527,7 @@ export const BLOG_POSTS: BlogPost[] = [
     image: "/images/real/charter-boat.webp",
     imageAlt: "Two anglers holding redfish aboard a Lafitte fishing charter boat in South Louisiana",
     href: "/blog",
+    objectPosition: "object-[center_16%]",
   },
   {
     id: "blog-why-lafitte",
@@ -548,6 +550,7 @@ export const BLOG_POSTS: BlogPost[] = [
     image: "/images/real/catch-5.webp",
     imageAlt: "Smiling young first-time angler with fresh speckled trout at Joe's Landing fillet table",
     href: "/blog",
+    objectPosition: "object-[center_28%]",
   },
 ];
 

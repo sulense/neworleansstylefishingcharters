@@ -3,7 +3,8 @@
 import { useState } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowsOut as Maximize2, X, ArrowRight } from "@phosphor-icons/react/dist/ssr";
+import { ArrowsOut as Maximize2, X, ArrowRight, InstagramLogo as Instagram } from "@phosphor-icons/react/dist/ssr";
+import { SITE_INFO } from "@/data/charterData";
 import {
   CoastalWaveDivider,
   CompassRoseWatermark,
@@ -19,62 +20,59 @@ interface MasonryPhoto {
   objectPosition?: string;
 }
 
-// Curated 6-photo 100% authentic editorial masonry gallery in 3 alternating height-balanced columns
-// (Tall/Wide, Wide/Tall, Tall/Wide) at exact natural aspect ratios — zero cropping, flush bottom edge.
+// Six most recent catch photos from @neworleansstylefishingcharters, saved locally.
+// Aspects match each photo so faces and the fish stay in frame.
 const MASONRY_COLUMNS: MasonryPhoto[][] = [
-  // Column 1: Tall 3:4 boat catch + 4:3 family catch
   [
     {
-      id: "mg-1",
-      src: "/images/real/charter-boat.webp",
-      alt: "Two smiling anglers on the bow of the charter boat holding giant golden Louisiana redfish",
-      caption: "Trophy Lafitte redfish aboard the bay boat",
-      aspectClass: "aspect-[3/4]",
+      id: "ig-1112",
+      src: "/images/real/instagram/2026-11-12.jpg",
+      alt: "Two smiling anglers holding the New Orleans Style Fishing Charters sign behind a table of redfish",
+      caption: "Good fishing before the weather turns chilly",
+      aspectClass: "aspect-[900/861]",
       objectPosition: "object-center",
     },
     {
-      id: "mg-2",
-      src: "/images/real/catches/catch-02.jpg",
-      alt: "Three-generation family and kids smiling behind a full table of speckled trout and redfish at Joe's Landing",
-      caption: "Family inshore charter haul at Joe's Landing",
+      id: "ig-1110",
+      src: "/images/real/instagram/2026-11-10.jpg",
+      alt: "Two anglers giving a thumbs-up behind a mixed catch of redfish and speckled trout",
+      caption: "New York crew, a pole-bending day",
       aspectClass: "aspect-[4/3]",
       objectPosition: "object-center",
     },
   ],
-  // Column 2: 4:3 multi-boat group catch + Tall 3:4 flounder & marsh scenery on the bow
   [
     {
-      id: "mg-3",
-      src: "/images/real/catches/catch-05.jpg",
-      alt: "Large smiling group charter crew behind dozens of fresh Lafitte redfish and black drum",
-      caption: "Multi-boat group charter haul out of Barataria",
+      id: "ig-1108",
+      src: "/images/real/instagram/2026-11-08.jpg",
+      alt: "Three smiling anglers behind a full table of redfish at the cleaning station",
+      caption: "Colorado crew on a productive fall trip",
       aspectClass: "aspect-[4/3]",
       objectPosition: "object-center",
     },
     {
-      id: "mg-4",
-      src: "/images/real/catch-vertical.jpg",
-      alt: "Smiling guest holding a fresh Louisiana flounder on the boat bow surrounded by calm Lafitte marshlands",
-      caption: "Barataria marsh flounder under clear blue Louisiana skies",
-      aspectClass: "aspect-[3/4]",
+      id: "ig-1111",
+      src: "/images/real/instagram/2026-11-11.jpg",
+      alt: "A couple holding the charter sign behind eight redfish on the cleaning table",
+      caption: "Virginia crew with a morning of redfish",
+      aspectClass: "aspect-[900/889]",
       objectPosition: "object-center",
     },
   ],
-  // Column 3: Tall 3:4 kid & speckled trout with bay boat + 4:3 redfish on the boat
   [
     {
-      id: "mg-5",
-      src: "/images/real/catch-5.webp",
-      alt: "Smiling young angler giving a thumbs-up behind a row of fresh speckled trout with the bay boat moored behind",
-      caption: "Kid-friendly speckled trout action at Joe's Landing",
-      aspectClass: "aspect-[3/4]",
+      id: "ig-1109",
+      src: "/images/real/instagram/2026-11-09.jpg",
+      alt: "Two anglers, one in a yellow LSU shirt, holding the charter sign over a row of redfish",
+      caption: "Alabama crew catching redfish on the bayou",
+      aspectClass: "aspect-[225/196]",
       objectPosition: "object-center",
     },
     {
-      id: "mg-6",
-      src: "/images/real/catches/catch-11.jpg",
-      alt: "Smiling guest aboard the bay boat holding a hefty copper-spotted redfish",
-      caption: "Shallow-water copper redfish right off the marsh bank",
+      id: "ig-1107",
+      src: "/images/real/instagram/2026-11-07.jpg",
+      alt: "Three young anglers holding the charter sign behind a table of redfish",
+      caption: "Missouri crew with their share of the bayou",
       aspectClass: "aspect-[4/3]",
       objectPosition: "object-center",
     },
@@ -122,8 +120,8 @@ export default function SpeciesSection() {
             Life on the Louisiana Bayou
           </h2>
           <p className="mt-3 text-sm sm:text-base text-[#495754] leading-relaxed">
-            Happy anglers, fresh redfish and trout catches, our custom bay boats, and the scenic
-            marshes of Lafitte.
+            Recent catches from the charter Instagram — anglers and fresh redfish at the
+            dock in Lafitte.
           </p>
         </motion.div>
 
@@ -174,7 +172,7 @@ export default function SpeciesSection() {
         </div>
 
         {/* Primary Gallery CTA */}
-        <div className="mt-10 flex items-center justify-center">
+        <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-3">
           <Link
             href="/gallery"
             className="btn-copper w-full sm:w-auto inline-flex items-center justify-center gap-2 text-white px-7 py-4 rounded-xl text-sm sm:text-[15px] font-extrabold uppercase tracking-wider group"
@@ -182,6 +180,15 @@ export default function SpeciesSection() {
             View Our Fishing Gallery
             <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
           </Link>
+          <a
+            href={SITE_INFO.instagramUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-4 rounded-xl border-2 border-[#203F39] text-[#203F39] hover:bg-[#203F39] hover:text-[#F6F1E7] text-sm sm:text-[15px] font-extrabold uppercase tracking-wider transition-colors"
+          >
+            <Instagram className="w-4 h-4" />
+            View Instagram
+          </a>
         </div>
       </div>
 

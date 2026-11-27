@@ -217,7 +217,9 @@ export function BlogSection() {
                     src={post.image}
                     alt={post.imageAlt}
                     loading="lazy"
-                    className="w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"
+                    className={`w-full h-full object-cover ${
+                      post.objectPosition || "object-center"
+                    } transition-transform duration-700 ease-out group-hover:scale-105`}
                   />
                   <span className="absolute top-3.5 left-3.5 px-3 py-1 rounded-full bg-[#203F39]/90 backdrop-blur-sm border border-[#F6F1E7]/25 text-[11px] font-semibold uppercase tracking-wider text-[#F6F1E7]">
                     {post.category}
